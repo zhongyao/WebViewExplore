@@ -18,6 +18,8 @@ import com.hongri.webview.widget.ActionWebView;
 
 /**
  * @author hongri
+ * 参考：
+ * https://juejin.im/post/59472293128fe1006a4a0b38
  */
 public class MainActivity extends AppCompatActivity implements ActionSelectListener {
 
