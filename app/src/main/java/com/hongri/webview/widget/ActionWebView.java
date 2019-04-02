@@ -13,6 +13,7 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import com.hongri.webview.ActionSelectListener;
+import com.hongri.webview.util.GlobalConstant;
 import com.hongri.webview.util.Logger;
 
 /**
@@ -47,11 +48,9 @@ public class ActionWebView extends WebView {
 
     private void initData() {
         mActionList = new ArrayList<>();
-        mActionList.add("扩选");
-        mActionList.add("复制");
-        mActionList.add("搜索");
-        mActionList.add("分享");
-        mActionList.add("跳转");
+        mActionList.add(GlobalConstant.ENLARGE);
+        mActionList.add(GlobalConstant.COPY);
+        mActionList.add(GlobalConstant.SHARE);
     }
 
     @Override
@@ -68,6 +67,54 @@ public class ActionWebView extends WebView {
         return resolveActionMode(actionMode);
     }
 
+    //@Override
+    //public ActionMode startActionMode(Callback callback, int type) {
+    //    Logger.d(TAG, "startActionMode--callback-:" + callback + " type:" + type);
+    //    //ActionMode actionMode = super.startActionMode(callback, type);
+    //    //return resolveActionMode(actionMode);
+    //    return super.startActionMode(new CustomCallback(getContext(), callback));
+    //}
+
+    /*public static class CustomCallback implements ActionMode.Callback {
+
+        private ActionMode.Callback mCallback;
+        private Context mContext;
+
+        public CustomCallback(Context context, Callback callback) {
+            mContext = context;
+            mCallback = callback;
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            return mCallback.onCreateActionMode(mode, menu);
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            int size = menu.size();
+            for (int i = 0; i < size; i++) {
+                MenuItem menuItem = menu.getItem(i);
+                final Drawable moreMenuDrawable = menuItem.getIcon();
+                if (moreMenuDrawable != null) {
+                    menuItem.setIcon(R.drawable.ic_launcher);
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            return mCallback.onActionItemClicked(mode, item);
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mCallback.onDestroyActionMode(mode);
+            mContext = null;
+        }
+    }*/
+
     private ActionMode resolveActionMode(ActionMode actionMode) {
         if (actionMode != null) {
             final Menu menu = actionMode.getMenu();
@@ -76,6 +123,7 @@ public class ActionWebView extends WebView {
 
             for (int i = 0; i < mActionList.size(); i++) {
                 menu.add(mActionList.get(i));
+                //menu.getItem(i).setIcon(R.drawable.ic_launcher);
             }
 
             for (int i = 0; i < menu.size(); i++) {
@@ -89,7 +137,6 @@ public class ActionWebView extends WebView {
                         return true;
                     }
                 });
-
             }
         }
 
@@ -110,7 +157,6 @@ public class ActionWebView extends WebView {
     public void dismissAction() {
         releaseAction();
     }
-
 
     public void setActionSelectListener(ActionSelectListener actionSelectListener) {
         mActionSelectListener = actionSelectListener;

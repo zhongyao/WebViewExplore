@@ -1,41 +1,39 @@
 package com.hongri.webview;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import com.hongri.webview.util.GlobalConstant;
 import com.hongri.webview.util.Logger;
 import com.hongri.webview.util.ToastUtil;
 import com.hongri.webview.widget.ActionWebView;
 
 /**
  * @author hongri
- * 参考：
- * https://juejin.im/post/59472293128fe1006a4a0b38
+ * @description 使用系统自有的工具框实现
  */
-public class MainActivity extends AppCompatActivity implements ActionSelectListener {
+public class MainActivity extends Activity implements ActionSelectListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ActionWebView mActionWebView;
-    private final String URL
-        = "https://mbd.baidu.com/newspage/data/landingshare?context=%7B%22nid%22%3A%22news_8794126446699987833%22%2C"
-        + "%22ssid%22%3A%22165ab808%22%7D&pageType=1";
-    //private final String URL = "https://article.xuexi
-    // .cn/html/777634625728427.html?study_style_id=feeds_default&pid=&ptype=-1&source=share&share_to=copylink";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initWebView();
+    }
+
+    private void initWebView() {
         mActionWebView = findViewById(R.id.webView);
         mActionWebView.setActionSelectListener(this);
         WebSettings webSettings = mActionWebView.getSettings();
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements ActionSelectListe
 
         mActionWebView.setWebViewClient(new ActionWebViewClient());
         mActionWebView.setWebChromeClient(new ActionWebChromeClient());
-        mActionWebView.loadUrl(URL);
+        mActionWebView.loadUrl(GlobalConstant.URL_NBA);
     }
 
     /**
@@ -92,18 +90,14 @@ public class MainActivity extends AppCompatActivity implements ActionSelectListe
 
     @Override
     public void onClick(String title, String selectText) {
-
-        if ("扩选".equals(title)) {
-
-        } else if ("复制".equals(title)) {
+        if (GlobalConstant.ENLARGE.equals(title)) {
+            ToastUtil.showToast(MainActivity.this, "扩选");
+        } else if (GlobalConstant.COPY.equals(title)) {
             ToastUtil.showToast(MainActivity.this, "复制文本：\n" + selectText);
-        } else if ("搜索".equals(title)) {
-
-        } else if ("分享".equals(title)) {
-
-        } else if ("跳转".equals(title)) {
-            Intent intent = new Intent(MainActivity.this, APIWebViewActivity.class);
-            startActivity(intent);
+        } else if (GlobalConstant.SHARE.equals(title)) {
+            ToastUtil.showToast(MainActivity.this, "分享");
+        } else {
+            ToastUtil.showToast(MainActivity.this, "无此选项...");
         }
         Logger.d(TAG, "onClick---" + "title:" + title + " selectText:" + selectText);
     }
@@ -116,8 +110,5 @@ public class MainActivity extends AppCompatActivity implements ActionSelectListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //if (mActionWebView != null) {
-        //    mActionWebView.dismissAction();
-        //}
     }
 }

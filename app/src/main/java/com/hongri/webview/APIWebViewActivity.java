@@ -1,12 +1,12 @@
 package com.hongri.webview;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
@@ -19,13 +19,16 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import com.hongri.webview.util.GlobalConstant;
 import com.hongri.webview.util.Logger;
 import com.hongri.webview.util.ToastUtil;
 
 /**
  * @author hongri
+ *
+ * JS交互类
  */
-public class APIWebViewActivity extends AppCompatActivity {
+public class APIWebViewActivity extends Activity {
 
     private final String TAG = APIWebViewActivity.class.getSimpleName();
     private WebView mWebView;
@@ -35,6 +38,10 @@ public class APIWebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apiweb_view);
 
+        initWebView();
+    }
+
+    private void initWebView() {
         mWebView = findViewById(R.id.webView);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -43,9 +50,12 @@ public class APIWebViewActivity extends AppCompatActivity {
 
         mWebView.addJavascriptInterface(new JsCallAndroidInterface(), "JSCallBackInterface");
 
-        mWebView.loadUrl("file:///android_asset/localHtml.html");
+        mWebView.loadUrl(GlobalConstant.URL_LOCAL_HTML);
     }
 
+    /**
+     * WebViewClient 主要用于帮助WebView处理各种通知、请求事件等
+     */
     private class APIWebViewClient extends WebViewClient {
 
         @Override
@@ -152,6 +162,9 @@ public class APIWebViewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * WebChromeClient主要辅助WebView处理JavaScript对话框，网站图标、网站title、加载进度等
+     */
     private class APIWebChromeClient extends WebChromeClient {
 
         /**
@@ -241,14 +254,26 @@ public class APIWebViewActivity extends AppCompatActivity {
      */
     private class JsCallAndroidInterface {
 
-        //@JavascriptInterface注解方法，js端调用，4.2以后安全
-        //4.2以前，当JS拿到Android这个对象后，就可以调用这个Android对象中所有的方法，包括系统类（java.lang.Runtime 类），从而进行任意代码执行。
+        /**
+         *@JavascriptInterface注解方法.
+         * js端调用，4.2以后安全;4.2以前，当JS拿到Android这个对象后，
+         * 就可以调用这个Android对象中所有的方法，包括系统类（java.lang.Runtime 类）
+         * 从而进行任意代码执行。
+         * @param msg
+         */
         @JavascriptInterface
         public void callback(String msg) {
             ToastUtil.showToast(APIWebViewActivity.this, "JS方法回调到web了 ：" + msg);
         }
     }
 
+    /**
+     * js与web交互2
+     * 通过shouldOverrideUrlLoading拦截 与 js交互
+     *
+     * @param url
+     * @return
+     */
     private boolean resolveShouldLoadLogic(String url) {
         Uri uri = Uri.parse(url);
         if (uri.getScheme().equals("js")) {
