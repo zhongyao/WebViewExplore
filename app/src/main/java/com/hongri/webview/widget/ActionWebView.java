@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import com.hongri.webview.ActionSelectListener;
 import com.hongri.webview.util.GlobalConstant;
@@ -51,6 +52,17 @@ public class ActionWebView extends WebView {
         mActionList.add(GlobalConstant.ENLARGE);
         mActionList.add(GlobalConstant.COPY);
         mActionList.add(GlobalConstant.SHARE);
+    }
+
+    @Override
+    public void loadData(String data, String mimeType, String encoding) {
+        super.loadData(data, mimeType, encoding);
+    }
+
+    @Override
+    public void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding, String historyUrl) {
+        Logger.d(TAG, "loadDataWithBaseURL:" + " baseUrl:" + baseUrl + " data:" + data);
+        super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl);
     }
 
     @Override
@@ -163,6 +175,10 @@ public class ActionWebView extends WebView {
     }
 
     /**
+     * Android调用JS的代码方式有2种：
+     * 1、通过WebView的loadUrl()
+     * 2、通过WebView的evaluateJavaScript()
+     *
      * 点击的时候，获取网页中选择的文本，回掉到原生中的js接口
      *
      * @param title 传入点击的item文本，一起通过js返回给原生接口
@@ -182,7 +198,13 @@ public class ActionWebView extends WebView {
             "JSInterface.callback(txt,title);" +
             "})()";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            evaluateJavascript("javascript:" + js, null);
+            evaluateJavascript("javascript:" + js, new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String value) {
+                    //此处为js返回结果
+                    Logger.d(TAG, "value:" + value);
+                }
+            });
         } else {
             loadUrl("javascript:" + js);
         }
@@ -198,9 +220,15 @@ public class ActionWebView extends WebView {
 
         @JavascriptInterface
         public void callback(final String value, final String title) {
-            if (mActionSelectListener != null) {
-                mActionSelectListener.onClick(title, value);
-            }
+            Logger.d(TAG, "currentThread:" + Thread.currentThread());
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    if (mActionSelectListener != null) {
+                        mActionSelectListener.onClick(title, value);
+                    }
+                }
+            });
         }
     }
 

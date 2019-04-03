@@ -5,16 +5,23 @@ import android.graphics.Bitmap;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import com.hongri.webview.util.BitmapUtil;
 import com.hongri.webview.util.GlobalConstant;
 import com.hongri.webview.util.Logger;
 import com.hongri.webview.util.ToastUtil;
 import com.hongri.webview.widget.ActionWebView;
+import com.hongri.webview.widget.ScanImage;
+import com.hongri.webview.widget.SelectedTextView;
+import com.hongri.webview.widget.TextImageLayout;
 
 /**
  * @author hongri
@@ -24,6 +31,12 @@ public class MainActivity extends Activity implements ActionSelectListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ActionWebView mActionWebView;
+    private TextImageLayout layout;
+    //private TextImageView iv;
+    private SelectedTextView tv;
+    private ScanImage scanIv;
+    private ImageView topIv;
+    private final String mBody = "示例：这里有个img标签，地址是相对路径<img src='/uploads/allimg/130923/1FP02V7-0.png' />";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +44,26 @@ public class MainActivity extends Activity implements ActionSelectListener {
         setContentView(R.layout.activity_main);
 
         initWebView();
+
+        initImageView();
+    }
+
+    private void initImageView() {
+        layout = findViewById(R.id.layout);
+        //iv = findViewById(R.id.iv);
+        tv = findViewById(R.id.tv);
+
+        scanIv = findViewById(R.id.scanIv);
+
+        topIv = findViewById(R.id.topIv);
+        layout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //iv.setVisibility(View.INVISIBLE);
+                topIv.setVisibility(View.VISIBLE);
+                topIv.setImageBitmap(BitmapUtil.convertViewToBitmap(layout));
+            }
+        });
     }
 
     private void initWebView() {
@@ -42,6 +75,10 @@ public class MainActivity extends Activity implements ActionSelectListener {
         mActionWebView.setWebViewClient(new ActionWebViewClient());
         mActionWebView.setWebChromeClient(new ActionWebChromeClient());
         mActionWebView.loadUrl(GlobalConstant.URL_NBA);
+        /**
+         * 直接加载一个字符串里面的html内容
+         */
+        //mActionWebView.loadDataWithBaseURL("http://www.jcodecraeer.com", mBody, "text/html", "utf-8", null);
     }
 
     /**
@@ -65,6 +102,7 @@ public class MainActivity extends Activity implements ActionSelectListener {
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             super.onReceivedError(view, request, error);
             Logger.d(TAG, "onReceivedError:" + error);
+            view.loadDataWithBaseURL(null, "<span style=\"\">网页加载失败</span>", "text/html", "utf-8", null);
         }
 
         @Override
@@ -89,13 +127,23 @@ public class MainActivity extends Activity implements ActionSelectListener {
     }
 
     @Override
-    public void onClick(String title, String selectText) {
+    public void onClick(String title, final String selectText) {
+        Logger.d(TAG, "currentThread:" + Thread.currentThread());
         if (GlobalConstant.ENLARGE.equals(title)) {
             ToastUtil.showToast(MainActivity.this, "扩选");
         } else if (GlobalConstant.COPY.equals(title)) {
             ToastUtil.showToast(MainActivity.this, "复制文本：\n" + selectText);
         } else if (GlobalConstant.SHARE.equals(title)) {
             ToastUtil.showToast(MainActivity.this, "分享");
+            layout.setVisibility(View.VISIBLE);
+            tv.setVisibility(View.VISIBLE);
+            tv.setText(selectText);
+            scanIv.setVisibility(View.VISIBLE);
+            scanIv.setImageResource(R.drawable.scan);
+            //iv.setVisibility(View.VISIBLE);
+            //iv.setDrawText(selectText);
+            //iv.invalidate();
+
         } else {
             ToastUtil.showToast(MainActivity.this, "无此选项...");
         }

@@ -249,8 +249,9 @@ public class APIWebViewActivity extends Activity {
     }
 
     /**
-     * js与web交互1
-     * js 与 原生交互接口
+     * JS调用android原生方法1：
+     *
+     * 通过WebView的addJavascriptInterface()进行对象映射
      */
     private class JsCallAndroidInterface {
 
@@ -268,8 +269,12 @@ public class APIWebViewActivity extends Activity {
     }
 
     /**
-     * js与web交互2
-     * 通过shouldOverrideUrlLoading拦截 与 js交互
+     * JS调用android原生方法2：
+     *
+     * 通过WebViewClient shouldOverrideUrlLoading方法回调拦截url
+     *
+     * 根据协议的参数，判断是否是所需要的url：
+     * 一般根据scheme(协议格式),authority（协议名)来判读
      *
      * @param url
      * @return
@@ -286,8 +291,10 @@ public class APIWebViewActivity extends Activity {
     }
 
     /**
-     * js与web交互3
-     * 通过 onJsPrompt 与 js交互
+     * JS调用android原生方法3：
+     *
+     * 通过WebChromeClient的 onJsAlert() onJsConfirm() onJsPrompt() 方法
+     * 回调拦截JS对话框alert() confirm() prompt()
      */
     private boolean resolveJSPrompt(String message) {
         Uri uri = Uri.parse(message);
