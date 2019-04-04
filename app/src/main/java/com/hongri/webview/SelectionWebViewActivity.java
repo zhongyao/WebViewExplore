@@ -18,14 +18,36 @@ package com.hongri.webview;
 
 import android.app.Activity;
 import android.os.Bundle;
+import com.hongri.webview.drag.PopItemClickListener;
+import com.hongri.webview.widget.ScanImage;
+import com.hongri.webview.widget.SelectedTextView;
+import com.hongri.webview.widget.TextImageLayout;
 
 /**
  * @author hongri
  */
-public class SelectionWebViewActivity extends Activity {
+public class SelectionWebViewActivity extends Activity implements PopItemClickListener {
+
+    private TextImageLayout layout;
+    private SelectedTextView tv;
+    private ScanImage scanIv;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        initView();
+    }
+
+    private void initView() {
+        layout = findViewById(R.id.layout);
+        tv = findViewById(R.id.tv);
+        scanIv = findViewById(R.id.scanIv);
+    }
+
+    @Override
+    public void popItemClick(String selectedText, int id) {
+
     }
 }

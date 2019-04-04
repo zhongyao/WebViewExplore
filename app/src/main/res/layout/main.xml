@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <view 
+    <view
+        android:id="@+id/webView"
         class="com.hongri.webview.widget.SelectionWebView"
-	    android:layout_width="match_parent" 
-	    android:layout_height="match_parent" 
-	    android:id="@+id/webView"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.hongri.webview.widget.TextImageLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.hongri.webview.widget.SelectedTextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/gray"
+            android:padding="50dp"
+            android:visibility="gone"/>
+
+        <!--<com.hongri.webview.widget.TextImageView
+            android:id="@+id/iv"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="50dp"
+            android:background="@color/gray"
+            android:visibility="gone"/>-->
+
+        <com.hongri.webview.widget.ScanImage
+            android:id="@+id/scanIv"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="top"
+            android:background="@color/gray"
+            android:paddingBottom="100dp"
+            android:src="@drawable/scan"
+            android:visibility="gone"/>
+
+    </com.hongri.webview.widget.TextImageLayout>
 
 </LinearLayout>

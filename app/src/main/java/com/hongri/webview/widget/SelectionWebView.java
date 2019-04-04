@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
 import android.view.Display;
@@ -30,10 +29,12 @@ import com.hongri.webview.drag.DragLayer;
 import com.hongri.webview.drag.DragListener;
 import com.hongri.webview.drag.DragSource;
 import com.hongri.webview.drag.MyAbsoluteLayout;
+import com.hongri.webview.drag.PopItemClickListener;
 import com.hongri.webview.selection.TextSelectionJavascriptInterface;
 import com.hongri.webview.selection.TextSelectionJavascriptInterfaceListener;
 import com.hongri.webview.util.GlobalConstant;
 import com.hongri.webview.util.Logger;
+import com.hongri.webview.util.ToastUtil;
 import com.hongri.webview.view.ActionItem;
 import com.hongri.webview.view.QuickAction;
 import com.hongri.webview.view.QuickAction.OnDismissListener;
@@ -46,7 +47,7 @@ import org.json.JSONObject;
 public class SelectionWebView extends WebView implements TextSelectionJavascriptInterfaceListener,
     OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 
-    private static final String TAG = "BTWebView";
+    private static final String TAG = "SelectionWebView";
 
     protected Context mContext;
 
@@ -146,6 +147,8 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
     private float mScrollDiffX = 0;
     private float mLastTouchX = 0;
 
+    private PopItemClickListener mPopItemClickListener;
+
     public SelectionWebView(Context context) {
         super(context);
 
@@ -167,6 +170,10 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
         mContext = context;
         initWebView(context);
 
+    }
+
+    public void setItemListener(PopItemClickListener popItemClickListener){
+        mPopItemClickListener = popItemClickListener;
     }
 
     @Override
@@ -253,15 +260,12 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
      */
     private void initWebView(Context context) {
 
-        // On Touch Listener
         setOnLongClickListener(this);
         setOnTouchListener(this);
 
-        // Webview initWebView
         getSettings().setJavaScriptEnabled(true);
         getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         getSettings().setPluginState(WebSettings.PluginState.ON);
-        //getSettings().setBuiltInZoomControls(true);
 
         setWebViewClient(new WebViewClient() {
             // This is how it is supposed to work, so I'll leave it in, but this doesn't get called on pinch
@@ -272,10 +276,6 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
                 mCurrentScale = newScale;
             }
         });
-
-        // Zoom out fully
-        //getSettings().setLoadWithOverviewMode(true);
-        //getSettings().setUseWideViewPort(true);
 
         // Javascript interfaces
         mTextSelectionJSInterface = new TextSelectionJavascriptInterface(context, this);
@@ -307,9 +307,9 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
         mDragController.addDropTarget(mSelectionDragLayer);
         mSelectionDragLayer.setDragController(mDragController);
 
-        mStartSelectionHandle = (ImageView)mSelectionDragLayer.findViewById(R.id.startHandle);
+        mStartSelectionHandle = mSelectionDragLayer.findViewById(R.id.startHandle);
         mStartSelectionHandle.setTag(new Integer(SELECTION_START_HANDLE));
-        mEndSelectionHandle = (ImageView)mSelectionDragLayer.findViewById(R.id.endHandle);
+        mEndSelectionHandle = mSelectionDragLayer.findViewById(R.id.endHandle);
         mEndSelectionHandle.setTag(new Integer(SELECTION_END_HANDLE));
 
         OnTouchListener handleTouchListener = new OnTouchListener() {
@@ -365,7 +365,6 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
      * Starts selection mode.
      */
     private void startSelectionMode() {
-
         startSelectionModeHandler.sendEmptyMessage(0);
 
     }
@@ -414,10 +413,13 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
         @Override
         public void handleMessage(Message m) {
 
+            if (mSelectionBounds == null){
+                return;
+            }
             MyAbsoluteLayout.LayoutParams startParams = (MyAbsoluteLayout.LayoutParams)mStartSelectionHandle
                 .getLayoutParams();
-            startParams.x = (int)(mSelectionBounds.left - mStartSelectionHandle.getDrawable().getIntrinsicWidth());
-            startParams.y = (int)(mSelectionBounds.top - mStartSelectionHandle.getDrawable().getIntrinsicHeight());
+            startParams.x = (mSelectionBounds.left - mStartSelectionHandle.getDrawable().getIntrinsicWidth());
+            startParams.y = (mSelectionBounds.top - mStartSelectionHandle.getDrawable().getIntrinsicHeight());
 
             // Stay on screen.
             startParams.x = (startParams.x < 0) ? 0 : startParams.x;
@@ -427,8 +429,8 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
 
             MyAbsoluteLayout.LayoutParams endParams = (MyAbsoluteLayout.LayoutParams)mEndSelectionHandle
                 .getLayoutParams();
-            endParams.x = (int)mSelectionBounds.right;
-            endParams.y = (int)mSelectionBounds.bottom;
+            endParams.x = mSelectionBounds.right;
+            endParams.y = mSelectionBounds.bottom;
 
             // Stay on screen
             endParams.x = (endParams.x < 0) ? 0 : endParams.x;
@@ -550,63 +552,48 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
      */
     private void showContextMenu(Rect displayRect) {
 
-        // Don't show this twice
         if (mContextMenuVisible) {
             return;
         }
 
-        // Don't use empty rect
-        //if(displayRect.isEmpty()){
         if (displayRect.right <= displayRect.left) {
             return;
         }
 
-        //Copy action item
         ActionItem buttonOne = new ActionItem();
-
         buttonOne.setTitle("扩选");
         buttonOne.setActionId(1);
         //buttonOne.setIcon(getResources().getDrawable(R.drawable.menu_search));
 
-        //Highlight action item
         ActionItem buttonTwo = new ActionItem();
-
         buttonTwo.setTitle("复制");
         buttonTwo.setActionId(2);
         //buttonTwo.setIcon(getResources().getDrawable(R.drawable.menu_info));
 
         ActionItem buttonThree = new ActionItem();
-
         buttonThree.setTitle("分享");
         buttonThree.setActionId(3);
         //buttonThree.setIcon(getResources().getDrawable(R.drawable.menu_eraser));
 
-        // The action menu
         mContextMenu = new QuickAction(getContext());
         mContextMenu.setOnDismissListener(this);
 
         // Add buttons
         mContextMenu.addActionItem(buttonOne);
-
         mContextMenu.addActionItem(buttonTwo);
-
         mContextMenu.addActionItem(buttonThree);
 
-        //initWebView the action item click listener
         mContextMenu.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
 
             @Override
             public void onItemClick(QuickAction source, int pos,
                                     int actionId) {
                 if (actionId == 1) {
-                    // Do Button 1 stuff
-                    Log.i(TAG, "Hit Button 1");
+                    ToastUtil.showToast(getContext(),"扩选");
                 } else if (actionId == 2) {
-                    // Do Button 2 stuff
-                    Log.i(TAG, "Hit Button 2");
+                    ToastUtil.showToast(getContext(),"复制");
                 } else if (actionId == 3) {
-                    // Do Button 3 stuff
-                    Log.i(TAG, "Hit Button 3");
+                    ToastUtil.showToast(getContext(),"分享");
                 }
                 mContextMenuVisible = false;
             }
@@ -631,16 +618,15 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
      * @param error
      */
     @Override
-    public void tsjiJSError(String error) {
-        Log.e(TAG, "JSError: " + error);
+    public void JSError(String error) {
+        Logger.d(TAG, "JSError: " + error);
     }
 
     /**
      * The user has started dragging the selection handles.
      */
     @Override
-    public void tsjiStartSelectionMode() {
-
+    public void StartSelectionMode() {
         startSelectionMode();
     }
 
@@ -648,8 +634,7 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
      * The user has stopped dragging the selection handles.
      */
     @Override
-    public void tsjiEndSelectionMode() {
-
+    public void EndSelectionMode() {
         endSelectionMode();
     }
 
@@ -662,7 +647,7 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
      * @param menuBounds
      */
     @Override
-    public void tsjiSelectionChanged(String range, String text, String handleBounds, String menuBounds) {
+    public void SelectionChanged(String range, String text, String handleBounds, String menuBounds) {
 
         handleSelection(range, text, handleBounds);
         Rect displayRect = getContextMenuBounds(menuBounds);
@@ -676,7 +661,7 @@ public class SelectionWebView extends WebView implements TextSelectionJavascript
      * Receives the content width for the page.
      */
     @Override
-    public void tsjiSetContentWidth(float contentWidth) {
+    public void SetContentWidth(float contentWidth) {
         mContentWidth = (int)getDensityDependentValue(contentWidth, mContext);
     }
 

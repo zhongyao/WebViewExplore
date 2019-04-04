@@ -3,6 +3,7 @@ package com.hongri.webview.selection;
 import android.content.Context;
 import android.os.Handler;
 import android.webkit.JavascriptInterface;
+import com.hongri.webview.util.Logger;
 
 /**
  * This javascript interface allows the page to communicate that text has been selected by the user.
@@ -14,7 +15,7 @@ public class TextSelectionJavascriptInterface {
     /**
      * The TAG for logging.
      */
-    private static final String TAG = "TextSelectionJavascriptInterface";
+    private static final String TAG = TextSelectionJavascriptInterface.class.getSimpleName();
 
     /**
      * The javascript interface name for adding to web view.
@@ -61,11 +62,12 @@ public class TextSelectionJavascriptInterface {
      */
     @JavascriptInterface
     public void jsError(final String error) {
+        Logger.d(TAG, "jsError:" + error);
         if (this.mListener != null) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mListener.tsjiJSError(error);
+                    mListener.JSError(error);
                 }
             });
         }
@@ -78,6 +80,7 @@ public class TextSelectionJavascriptInterface {
      */
     @JavascriptInterface
     public String getInterfaceName() {
+        Logger.d(TAG, "getInterfaceName:" + this.interfaceName);
         return this.interfaceName;
     }
 
@@ -86,11 +89,12 @@ public class TextSelectionJavascriptInterface {
      */
     @JavascriptInterface
     public void startSelectionMode() {
+        Logger.d(TAG, "startSelectionMode");
         if (this.mListener != null) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mListener.tsjiStartSelectionMode();
+                    mListener.StartSelectionMode();
                 }
             });
         }
@@ -101,11 +105,12 @@ public class TextSelectionJavascriptInterface {
      */
     @JavascriptInterface
     public void endSelectionMode() {
+        Logger.d(TAG, "endSelectionMode");
         if (this.mListener != null) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mListener.tsjiEndSelectionMode();
+                    mListener.EndSelectionMode();
                 }
             });
         }
@@ -121,11 +126,14 @@ public class TextSelectionJavascriptInterface {
     @JavascriptInterface
     public void selectionChanged(final String range, final String text, final String handleBounds,
                                  final String menuBounds) {
+        Logger.d(TAG,
+            "selectionChanged:" + " range:" + range + " text:" + text + " handleBounds:" + handleBounds + " menuBounds:"
+                + menuBounds);
         if (this.mListener != null) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mListener.tsjiSelectionChanged(range, text, handleBounds, menuBounds);
+                    mListener.SelectionChanged(range, text, handleBounds, menuBounds);
                 }
             });
         }
@@ -133,11 +141,12 @@ public class TextSelectionJavascriptInterface {
 
     @JavascriptInterface
     public void setContentWidth(final float contentWidth) {
+        Logger.d(TAG, "setContentWidth:" + contentWidth);
         if (this.mListener != null) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mListener.tsjiSetContentWidth(contentWidth);
+                    mListener.SetContentWidth(contentWidth);
                 }
             });
         }
