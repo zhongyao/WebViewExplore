@@ -16,17 +16,24 @@
 
     <Button
         android:id="@+id/btn2"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="自定义WebView工具框--2"/>
 
     <Button
+        android:id="@+id/btn3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:id="@+id/btn3"
         android:text="JS交互类"/>
+
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="正文顶部动画"/>
 
 
 </LinearLayout>

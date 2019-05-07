@@ -6,11 +6,11 @@
 
     <view
         android:id="@+id/webView"
-        class="com.hongri.webview.widget.SelectionWebView"
+        class="com.hongri.webview.copy.widget.SelectionWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.hongri.webview.widget.TextImageLayout
+    <com.hongri.webview.copy.widget.TextImageLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +18,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <com.hongri.webview.widget.SelectedTextView
+        <com.hongri.webview.copy.widget.SelectedTextView
             android:id="@+id/tv"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -26,7 +26,7 @@
             android:padding="50dp"
             android:visibility="gone"/>
 
-        <!--<com.hongri.webview.widget.TextImageView
+        <!--<com.hongri.webview.copy.widget.TextImageView
             android:id="@+id/iv"
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -34,7 +34,7 @@
             android:background="@color/gray"
             android:visibility="gone"/>-->
 
-        <com.hongri.webview.widget.ScanImage
+        <com.hongri.webview.copy.widget.ScanImage
             android:id="@+id/scanIv"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -44,6 +44,6 @@
             android:src="@drawable/scan"
             android:visibility="gone"/>
 
-    </com.hongri.webview.widget.TextImageLayout>
+    </com.hongri.webview.copy.widget.TextImageLayout>
 
 </LinearLayout>
