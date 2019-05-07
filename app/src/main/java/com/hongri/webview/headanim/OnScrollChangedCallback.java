@@ -5,5 +5,6 @@ package com.hongri.webview.headanim;
  */
 public interface OnScrollChangedCallback {
 
-    void onScroll(int l, int t, int oldl, int oldt);
+    void onScroll(int l, int t, int oldl, int oldt, float webContentHeight, float webViewHeight);
+
 }

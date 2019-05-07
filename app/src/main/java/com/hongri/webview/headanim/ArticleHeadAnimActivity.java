@@ -31,12 +31,26 @@ public class ArticleHeadAnimActivity extends Activity implements OnScrollChanged
     }
 
     @Override
-    public void onScroll(int l, int t, int oldl, int oldt) {
+    public void onScroll(int l, int t, int oldl, int oldt, float webContentHeight, float webViewHeight) {
         Logger.d(TAG, "l:" + l + " t:" + t + " oldl:" + oldl + " oldt:" + oldt);
+        Logger.d(TAG, "webContentHeight:" + webContentHeight + " webViewHeight:" + webViewHeight);
+
+        if (t + webViewHeight == webContentHeight) {
+            Logger.d("已滑动到底部");
+        } else if (t == 0) {
+            Logger.d("已滑动到顶部");
+        }
+
+        if (t > oldt) {
+            Logger.d("正在上滑");
+        } else if (t < oldt) {
+            Logger.d("正在下滑");
+        }
         if (t >= 600) {
             headTitle.setText("订阅...");
         } else {
             headTitle.setText("题目");
         }
     }
+
 }

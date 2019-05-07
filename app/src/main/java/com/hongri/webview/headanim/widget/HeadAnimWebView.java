@@ -31,8 +31,12 @@ public class HeadAnimWebView extends WebView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
+        //WebView的内容总高度
+        float webContentHeight = getContentHeight() * getScale();
+        //WebView控件高度
+        float webViewHeight = getHeight();
         if (mOnScrollChangedCallback != null) {
-            mOnScrollChangedCallback.onScroll(l, t, oldl, oldt);
+            mOnScrollChangedCallback.onScroll(l, t, oldl, oldt, webContentHeight, webViewHeight);
         }
     }
 
