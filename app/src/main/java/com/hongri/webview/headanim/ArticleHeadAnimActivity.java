@@ -2,6 +2,7 @@ package com.hongri.webview.headanim;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.hongri.webview.R;
@@ -19,6 +20,7 @@ public class ArticleHeadAnimActivity extends Activity implements OnScrollChanged
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_article_head_anim);
 
         headLayout = findViewById(R.id.headLayout);
