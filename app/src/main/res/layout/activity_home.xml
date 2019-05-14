@@ -26,7 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="JS交互类"/>
+        android:text="JS调用Native"/>
+
+    <Button
+        android:id="@+id/btnJS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Native调用JS"/>
 
     <Button
         android:id="@+id/btn4"

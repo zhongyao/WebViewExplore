@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import com.hongri.webview.copy.APIWebViewActivity;
 import com.hongri.webview.copy.MainActivity;
+import com.hongri.webview.copy.NativeToJsBridgeActivity;
 import com.hongri.webview.copy.SelectionWebViewActivity;
 import com.hongri.webview.headanim.ArticleHeadAnimActivity;
 
@@ -19,7 +20,7 @@ import com.hongri.webview.headanim.ArticleHeadAnimActivity;
  */
 public class HomeActivity extends Activity implements View.OnClickListener {
 
-    private Button btn1, btn2, btn3, btn4;
+    private Button btn1, btn2, btn3,btnJS, btn4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +30,13 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         btn1 = findViewById(R.id.btn1);
         btn2 = findViewById(R.id.btn2);
         btn3 = findViewById(R.id.btn3);
+        btnJS = findViewById(R.id.btnJS);
         btn4 = findViewById(R.id.btn4);
 
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
         btn3.setOnClickListener(this);
+        btnJS.setOnClickListener(this);
         btn4.setOnClickListener(this);
     }
 
@@ -51,6 +54,10 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn3:
                 intent = new Intent(HomeActivity.this, APIWebViewActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btnJS:
+                intent = new Intent(HomeActivity.this, NativeToJsBridgeActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn4:
