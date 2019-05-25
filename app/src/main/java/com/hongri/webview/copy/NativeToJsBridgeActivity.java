@@ -75,7 +75,7 @@ public class NativeToJsBridgeActivity extends Activity implements View.OnClickLi
                              * Native调用JS方法二：
                              * 效率高，有返回值(4.4以上系统使用)
                              */
-                            webView.evaluateJavascript("javascript:callJS()", new ValueCallback<String>() {
+                            webView.evaluateJavascript("javascript:callJS('yao')", new ValueCallback<String>() {
                                 @Override
                                 public void onReceiveValue(String value) {
                                     //此处为JS返回的结果

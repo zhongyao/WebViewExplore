@@ -17,6 +17,7 @@ import com.hongri.webview.headanim.ArticleHeadAnimActivity;
  * @reference： https://juejin.im/post/59472293128fe1006a4a0b38
  * https://juejin.im/post/5924dbf58d6d810058fdde43（全面介绍WebView）
  * https://blog.csdn.net/carson_ho/article/details/64904691#commentBox (WebView与Js交互)
+ * 启动类。。
  */
 public class HomeActivity extends Activity implements View.OnClickListener {
 
