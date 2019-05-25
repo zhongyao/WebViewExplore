@@ -1,10 +1,12 @@
 package com.hongri.webview.copy.view;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.graphics.Rect;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,8 +29,8 @@ import com.hongri.webview.R;
  *
  * @author Lorensius W. L. T <lorenz@londatiga.net>
  *
- *         Contributors:
- *         - Kevin Peck <kevinwpeck@gmail.com>
+ * Contributors:
+ * - Kevin Peck <kevinwpeck@gmail.com>
  */
 public class QuickAction extends PopupWindows implements OnDismissListener {
     private View mRootView;
@@ -421,29 +423,29 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
     //
     //	case ANIM_GROW_FROM_RIGHT:
     //		mWindow.setAnimationStyle((onTop) ? R.style.Animations_PopUpMenu_Right : R.style
-	// .Animations_PopDownMenu_Right);
+    // .Animations_PopDownMenu_Right);
     //		break;
     //
     //	case ANIM_GROW_FROM_CENTER:
     //		mWindow.setAnimationStyle((onTop) ? R.style.Animations_PopUpMenu_Center : R.style
-	// .Animations_PopDownMenu_Center);
+    // .Animations_PopDownMenu_Center);
     //	break;
     //
     //	case ANIM_REFLECT:
     //		mWindow.setAnimationStyle((onTop) ? R.style.Animations_PopUpMenu_Reflect : R.style
-	// .Animations_PopDownMenu_Reflect);
+    // .Animations_PopDownMenu_Reflect);
     //	break;
     //
     //	case ANIM_AUTO:
     //		if (arrowPos <= screenWidth/4) {
     //			mWindow.setAnimationStyle((onTop) ? R.style.Animations_PopUpMenu_Left : R.style
-	// .Animations_PopDownMenu_Left);
+    // .Animations_PopDownMenu_Left);
     //		} else if (arrowPos > screenWidth/4 && arrowPos < 3 * (screenWidth/4)) {
     //			mWindow.setAnimationStyle((onTop) ? R.style.Animations_PopUpMenu_Center : R.style
-	// .Animations_PopDownMenu_Center);
+    // .Animations_PopDownMenu_Center);
     //		} else {
     //			mWindow.setAnimationStyle((onTop) ? R.style.Animations_PopUpMenu_Right : R.style
-	// .Animations_PopDownMenu_Right);
+    // .Animations_PopDownMenu_Right);
     //		}
     //
     //		break;
