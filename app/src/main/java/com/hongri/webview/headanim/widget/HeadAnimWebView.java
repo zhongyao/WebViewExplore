@@ -3,6 +3,7 @@ package com.hongri.webview.headanim.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
+import com.hongri.webview.copy.util.Logger;
 import com.hongri.webview.headanim.OnScrollChangedCallback;
 
 /**
@@ -31,6 +32,8 @@ public class HeadAnimWebView extends WebView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
+
+        Logger.d(TAG, "getContentHeight:" + getContentHeight() + " getScale:" + getScale());
         //WebView的内容总高度
         float webContentHeight = getContentHeight() * getScale();
         //WebView控件高度

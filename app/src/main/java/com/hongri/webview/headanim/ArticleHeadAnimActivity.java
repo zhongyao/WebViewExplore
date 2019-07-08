@@ -2,7 +2,10 @@ package com.hongri.webview.headanim;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.hongri.webview.R;
@@ -29,6 +32,13 @@ public class ArticleHeadAnimActivity extends Activity implements OnScrollChanged
 
         webView.loadUrl(GlobalConstant.URL_NBA);
         webView.setOnScrollChangedCallback(this);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onScaleChanged(WebView view, float oldScale, float newScale) {
+                super.onScaleChanged(view, oldScale, newScale);
+                Logger.d(TAG, "oldScale:" + oldScale + "---newScale:" + newScale);
+            }
+        });
 
     }
 
