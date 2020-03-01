@@ -25,6 +25,8 @@ public class WebViewCacheActivity extends AppCompatActivity {
          * Application Cache 缓存机制
          */
         appCache();
+
+        domStorage();
     }
 
     private void initView() {
@@ -42,5 +44,10 @@ public class WebViewCacheActivity extends AppCompatActivity {
         mWebSettings.setAppCacheMaxSize(20*1024*1024);
 
         //注意:每个 Application 只调用一次 WebSettings.setAppCachePath() 和 WebSettings.setAppCacheMaxSize()
+    }
+
+    private void domStorage() {
+        //开启DOM storage
+        mWebSettings.setDomStorageEnabled(true);
     }
 }

@@ -83,27 +83,9 @@
 ##### 1.1.2、Application Cache缓存机制：以文件为单位进行缓存，且文件有一定更新机制（类似于浏览器缓存机制）【专门为 Web App离线使用而开发的缓存机制】
 #####  AppCache 原理有两个关键点：manifest 属性和 manifest 文件。
 
-<!DOCTYPE html>
-<html manifest="demo_html.appcache">
-// HTML 在头中通过 manifest 属性引用 manifest 文件
-// manifest 文件：就是上面以 appcache 结尾的文件，是一个普通文件文件，列出了需要缓存的文件
-// 浏览器在首次加载 HTML 文件时，会解析 manifest 属性，并读取 manifest 文件，获取 Section：CACHE MANIFEST 下要缓存的文件列表，再对文件缓存
-<body>
-...
-</body>
-</html>
-
-// 原理说明如下：
-// AppCache 在首次加载生成后，也有更新机制。被缓存的文件如果要更新，需要更新 manifest 文件
-// 因为浏览器在下次加载时，除了会默认使用缓存外，还会在后台检查 manifest 文件有没有修改（byte by byte)
-发现有修改，就会重新获取 manifest 文件，对 Section：CACHE MANIFEST 下文件列表检查更新
-// manifest 文件与缓存文件的检查更新也遵守浏览器缓存机制
-// 如用户手动清了 AppCache 缓存，下次加载时，浏览器会重新生成缓存，也可算是一种缓存的更新
-// AppCache 的缓存文件，与浏览器的缓存文件分开存储的，因为 AppCache 在本地有 5MB（分 HOST）的空间限制
-
-##### 
-#####
-#####
+##### 1.1.3、Dem Storage 缓存机制：通过存储字符串的 Key - Value 对来提供
+##### DOM Storage 分为 sessionStorage & localStorage； 二者使用方法基本相同，区别在于作用范围不同：a. sessionStorage：具备临时性，即存储与页面相关的数据，它在页面关闭后无法使用 b. localStorage：具备持久性，即保存的数据在页面关闭后也可以使用。
+##### 应用场景：存储临时、简单的数据。代替 **将 不需要让服务器知道的信息 存储到 cookies **的这种传统方法。Dom Storage 机制类似于 Android 的 SharedPreference机制。
 #####
 #####
 
