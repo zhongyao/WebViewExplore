@@ -120,7 +120,8 @@
   
 ##### 2.1、资源预加载：提早加载将需使用的H5页面，即 提前构建缓存
 ##### 2.1.1、预加载WebView对象
-![avatar1](https://upload-images.jianshu.io/upload_images/944365-c14d7fef491bb587.png)
+![avatar](https://upload-images.jianshu.io/upload_images/944365-c14d7fef491bb587.png)
+##### 
 ##### 2.1.2、预加载H5资源：在应用启动、初始化第一个WebView对象时，直接开始网络请求加载H5页面，后续需打开这些H5页面时就直接从该本地对象中获取
 ##### 具体实现：在Android 的BaseApplication里初始化一个WebView对象（用于加载常用的H5页面资源）；当需使用这些页面时再从BaseApplication里取过来直接使用
 ##### 应用场景：对于Android WebView的首页建议使用这种方案，能有效提高首页加载的效率
@@ -140,8 +141,8 @@
   
   
 ##### 参考：
-##### [Android：手把手教你构建 全面的WebView 缓存机制 & 资源加载方案](https://www.jianshu.com/p/5e7075f4875f)
-##### [最全面总结 Android WebView与 JS 的交互方式](https://www.jianshu.com/p/345f4d8a5cfa)
+[Android：手把手教你构建 全面的WebView 缓存机制 & 资源加载方案](https://www.jianshu.com/p/5e7075f4875f)
+[最全面总结 Android WebView与 JS 的交互方式](https://www.jianshu.com/p/345f4d8a5cfa)
 #####
 #####
 #####
