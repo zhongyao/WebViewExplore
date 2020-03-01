@@ -26,7 +26,20 @@ public class WebViewCacheActivity extends AppCompatActivity {
          */
         appCache();
 
+        /**
+         * Dom Storage 缓存机制
+         */
         domStorage();
+
+        /**
+         * Web SQL Database 缓存机制[不在推荐，被IndexedDB缓存机制代替]
+         */
+        dataBaseStorage();
+
+        /**
+         * IndexedDB缓存机制
+         */
+        indexedDBStorage();
     }
 
     private void initView() {
@@ -50,4 +63,16 @@ public class WebViewCacheActivity extends AppCompatActivity {
         //开启DOM storage
         mWebSettings.setDomStorageEnabled(true);
     }
+
+    private void dataBaseStorage() {
+        String cacheDirPath = getFilesDir().getAbsolutePath()+"cache/";
+        mWebSettings.setDatabaseEnabled(true);
+        mWebSettings.setDatabasePath(cacheDirPath);
+    }
+
+    private void indexedDBStorage() {
+        //只需设置支持JS就自动打开IndexedDB存储机制.Android 在4.4开始加入对 IndexedDB 的支持，只需打开允许 JS 执行的开关就好了。
+        mWebSettings.setJavaScriptEnabled(true);
+    }
+
 }
