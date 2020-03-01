@@ -70,7 +70,7 @@ public class APIWebViewActivity extends Activity {
         @TargetApi(VERSION_CODES.LOLLIPOP)
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            if (resolveShouldLoadLogic(request.getUrl().toSafeString())) {
+            if (resolveShouldLoadLogic(request.getUrl().toString())) {
                 return true;
             }
             return super.shouldOverrideUrlLoading(view, request);

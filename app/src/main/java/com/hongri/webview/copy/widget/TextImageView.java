@@ -103,7 +103,7 @@ public class TextImageView extends AppCompatImageView {
             canvas.drawText(lineText, 60, 300 + (i * (mTextSize + mTextLinePadding)), mPaint);
         }
 
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
         canvas.restore();
     }
 }
