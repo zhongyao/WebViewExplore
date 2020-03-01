@@ -44,9 +44,9 @@
 
 
 ##### 2、消耗流量原因：
-#####（1）每次使用过H5页面，都需要重新加载该H5页面
-#####（2）每加载一个H5页面，就会有较多的网络请求
-#####（3）每个请求都是串行的
+##### （1）每次使用过H5页面，都需要重新加载该H5页面
+##### （2）每加载一个H5页面，就会有较多的网络请求
+##### （3）每个请求都是串行的
 
 
 ##### 针对以上Android WebView的性能问题，有如下三种解决方案：
@@ -60,7 +60,7 @@
 ##### （3）Dom Storage 缓存机制
 ##### （4）Web SQL Database缓存机制
 ##### （5）Indexed Database 缓存机制
-#####
+##### 
 ##### 1.1.1、浏览器缓存机制：
 ##### 根据Http协议头里的Cache-Control(或Expire) 和 Last-Modified（或ETag）等字段来控制文件的缓存机制：
 ##### （1）Cache-Control:用于控制文件在本地缓存的有效时长。
@@ -80,8 +80,28 @@
 
 ##### 注：浏览器缓存机制是浏览器内核的机制，一般都是标准实现，不需要客户端操心。 
 #####
-#####
-#####
+##### 1.1.2、Application Cache缓存机制：以文件为单位进行缓存，且文件有一定更新机制（类似于浏览器缓存机制）【专门为 Web App离线使用而开发的缓存机制】
+#####  AppCache 原理有两个关键点：manifest 属性和 manifest 文件。
+
+<!DOCTYPE html>
+<html manifest="demo_html.appcache">
+// HTML 在头中通过 manifest 属性引用 manifest 文件
+// manifest 文件：就是上面以 appcache 结尾的文件，是一个普通文件文件，列出了需要缓存的文件
+// 浏览器在首次加载 HTML 文件时，会解析 manifest 属性，并读取 manifest 文件，获取 Section：CACHE MANIFEST 下要缓存的文件列表，再对文件缓存
+<body>
+...
+</body>
+</html>
+
+// 原理说明如下：
+// AppCache 在首次加载生成后，也有更新机制。被缓存的文件如果要更新，需要更新 manifest 文件
+// 因为浏览器在下次加载时，除了会默认使用缓存外，还会在后台检查 manifest 文件有没有修改（byte by byte)
+发现有修改，就会重新获取 manifest 文件，对 Section：CACHE MANIFEST 下文件列表检查更新
+// manifest 文件与缓存文件的检查更新也遵守浏览器缓存机制
+// 如用户手动清了 AppCache 缓存，下次加载时，浏览器会重新生成缓存，也可算是一种缓存的更新
+// AppCache 的缓存文件，与浏览器的缓存文件分开存储的，因为 AppCache 在本地有 5MB（分 HOST）的空间限制
+
+##### 
 #####
 #####
 #####
