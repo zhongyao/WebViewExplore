@@ -135,6 +135,13 @@
   
   
   
+#### WebView加载内容的几种方式：
+##### 1、加载assets目录下的本地网页，如：
+##### mWebView.loadUrl("file:///android_asset/html/test1.html");
+##### 2、加载远程网页，如：
+##### mWebView.loadUrl("http://www.google.com");
+##### 3、使用loadData或loadDataWithBaseURL方法加载内容（主要用于加载html片段，而不是一个完整的网页），如：
+##### mWebView.loadDataWithBaseURL(null, "<span style=\"\">网页加载失败</span>", "text/html", "utf-8", null);
   
   
   

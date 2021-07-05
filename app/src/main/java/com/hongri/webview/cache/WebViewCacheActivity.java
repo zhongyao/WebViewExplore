@@ -3,11 +3,13 @@ package com.hongri.webview.cache;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.app.Activity;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -19,8 +21,10 @@ import com.hongri.webview.R;
  * @author hongri
  * WebView缓存机制
  */
-public class WebViewCacheActivity extends AppCompatActivity {
+public class WebViewCacheActivity extends Activity {
 
+    private static final String TAG = WebViewCacheActivity.class.getSimpleName();
+    private static final String URL = "https://www.baidu.com";
     private WebView mWebView;
     private WebSettings mWebSettings;
 
@@ -55,6 +59,10 @@ public class WebViewCacheActivity extends AppCompatActivity {
 
         //资源预加载
         setWebViewClient();
+
+//        mWebView.loadUrl(URL);
+        mWebView.loadDataWithBaseURL(null, "<span style=\"\">网页加载失败</span>", "text/html", "utf-8", null);
+
     }
 
     private void initView() {
@@ -97,10 +105,12 @@ public class WebViewCacheActivity extends AppCompatActivity {
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view,
                                                               WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                Log.d(TAG, "shouldInterceptRequest--> url:" + url);
                 // 步骤1:判断拦截资源的条件，即判断url里的图片资源的文件名
                 // 假设网页里该图片资源的地址为：http://abc.com/imgage/logo.gif
                 // 图片的资源文件名为:logo.gif
-                if (request.getUrl().toString().contains("logo.gif")) {
+                if (url.contains("logo.gif")) {
                     InputStream is = null;
                     // 步骤2:创建一个输入流
 
@@ -123,6 +133,21 @@ public class WebViewCacheActivity extends AppCompatActivity {
                     return response;
                 }
                 return super.shouldInterceptRequest(view, request);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.d(TAG, "shouldOverrideUrlLoading-111--> url:" + url);
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
+            @RequiresApi(api = VERSION_CODES.LOLLIPOP)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                Log.d(TAG, "shouldOverrideUrlLoading-222--> url:" + url);
+
+                return super.shouldOverrideUrlLoading(view, request);
             }
         });
     }

@@ -10,13 +10,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".cache.WebViewCacheActivity"></activity>
-        <activity android:name=".copy.jsbridge.JsBridgeActivity">
+        <activity android:name=".cache.WebViewCacheActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".copy.jsbridge.JsBridgeActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity android:name=".copy.NativeToJsBridgeActivity"></activity>
         <activity android:name=".headanim.ArticleHeadAnimActivity"></activity>
