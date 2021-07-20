@@ -144,7 +144,18 @@
 ##### mWebView.loadDataWithBaseURL(null, "<span style=\"\">网页加载失败</span>", "text/html", "utf-8", null);
   
   
-  
+#### WebView的UserAgent：
+##### 用户代理，是Http协议的一部分，属于头域的组成部分，简称为UA。
+##### 是一种向访问网站提供你所使用的浏览器类型及版本、操作系统及版本、浏览器内核等信息标识。
+##### 通过这个标识，用户所访问的网站可以显示不同的排版，从而为用户提供更好的体验或者信息统计。例如用手机访问谷歌和电脑访问是不一样的，这些是谷歌根据访问者的UA来判断的。  
+##### 获取UA的方式：
+
+''
+        //得到WebSettings对象
+        WebSettings settings = webview.getSettings();
+        // 获取到UserAgentString
+        String userAgent = settings.getUserAgentString();
+''  
   
   
 ##### 参考：
