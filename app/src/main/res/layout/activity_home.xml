@@ -42,5 +42,12 @@
         android:layout_marginTop="40dp"
         android:text="正文顶部动画"/>
 
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Doc等文件WebView预览"/>
+
 
 </LinearLayout>

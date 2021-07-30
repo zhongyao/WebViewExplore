@@ -11,11 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity android:name=".cache.WebViewCacheActivity">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".copy.jsbridge.JsBridgeActivity">
             <!--<intent-filter>
@@ -25,6 +25,14 @@
             </intent-filter>-->
         </activity>
         <activity android:name=".copy.NativeToJsBridgeActivity"></activity>
+        <activity android:name=".DocWebViewActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".headanim.ArticleHeadAnimActivity"></activity>
         <activity android:name=".copy.MainActivity"></activity>
         <activity android:name=".copy.APIWebViewActivity"></activity>

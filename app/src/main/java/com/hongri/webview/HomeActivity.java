@@ -21,7 +21,7 @@ import com.hongri.webview.headanim.ArticleHeadAnimActivity;
  */
 public class HomeActivity extends Activity implements View.OnClickListener {
 
-    private Button btn1, btn2, btn3,btnJS, btn4;
+    private Button btn1, btn2, btn3,btnJS, btn4, btn5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,14 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         btn3 = findViewById(R.id.btn3);
         btnJS = findViewById(R.id.btnJS);
         btn4 = findViewById(R.id.btn4);
+        btn5 = findViewById(R.id.btn5);
 
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
         btn3.setOnClickListener(this);
         btnJS.setOnClickListener(this);
         btn4.setOnClickListener(this);
+        btn5.setOnClickListener(this);
     }
 
     @Override
@@ -63,6 +65,10 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn4:
                 intent = new Intent(HomeActivity.this, ArticleHeadAnimActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn5:
+                intent = new Intent(HomeActivity.this, DocWebViewActivity.class);
                 startActivity(intent);
                 break;
             default:
