@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.hongri.webview.copy.widget.StableWebView;
+import com.hongri.webview.util.SchemeUtil;
 
 /**
  * Create by zhongyao on 2021/7/30
@@ -16,7 +17,9 @@ import com.hongri.webview.copy.widget.StableWebView;
  */
 public class DocWebViewActivity extends Activity {
 //    private static final String URL = "https://www.baidu.com";
-    private static final String URL = "https://b23.tv/tio1Wz";
+//    private static final String URL = "https://zao.place.fun/doc/reportguide";
+    private static final String URL = "http://stocardapp.s3-external-3.amazonaws.com/ios/icons/1001tur@2x.png";
+//    private static final String URL = "https://b23.tv/tio1Wz";
 
 
     /**
@@ -37,7 +40,11 @@ public class DocWebViewActivity extends Activity {
         setContentView(R.layout.activity_doc);
 
         stableWebView = findViewById(R.id.stableWebView);
-        stableWebView.loadUrl(URL);
+        if (!SchemeUtil.isImageFile(URL)) {
+            stableWebView.loadUrl(URL);
+        } else {
+            initBrowserView();
+        }
 
         //唤起系统浏览器预览Office文件或图片
 //        initBrowserView();
@@ -51,6 +58,5 @@ public class DocWebViewActivity extends Activity {
         //预览图片
         //intent.setData(Uri.parse(IMAGE_URL));
         startActivity(intent);
-        stableWebView.loadUrl(URL);
     }
 }

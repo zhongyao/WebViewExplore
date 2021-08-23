@@ -33,4 +33,38 @@ public class SchemeUtil {
         }
         return false;
     }
+
+    /**
+     * 是否是Http协议
+     *
+     * @param url
+     * @return
+     */
+    public static boolean isHttpProtocol(String url) {
+        if (url.startsWith("http") || url.startsWith("https") || url.startsWith("www")) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * 是否是office在线文档
+     *
+     * @param url
+     * @return
+     */
+    public static boolean isDownloadFile(String url) {
+        if ( isImageFile(url) || url.endsWith(".apk") || url.endsWith(".doc") || url.endsWith(".docx") || url.endsWith("xls") || url.endsWith("xlsx") || url.endsWith("ppt") || url.endsWith("pptx")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isImageFile(String url) {
+        if (url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith("jpeg") || url.endsWith(".gif") || url.endsWith(".webp")) {
+            return true;
+        }
+        return false;
+    }
 }

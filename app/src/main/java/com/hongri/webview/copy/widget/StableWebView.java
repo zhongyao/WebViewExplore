@@ -11,11 +11,13 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewParent;
+import android.webkit.DownloadListener;
 import android.webkit.PermissionRequest;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -76,10 +78,20 @@ public class StableWebView extends WebView {
         ws.setSupportMultipleWindows(true);// 新加
         setWebChromeClient(new XWebChromeClient());
         setWebViewClient(new XWebViewClient());
+
+        setDownloadListener(new XDownloadListener());
     }
 
     public void setWebTitleCallback(IWebTitleCallBack webTitleCallback) {
         webTitleCallBack = webTitleCallback;
+    }
+
+    public static class XDownloadListener implements DownloadListener {
+
+        @Override
+        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
+            Log.d(TAG, "onDownloadStart---> url:" + url + " userAgent:" + userAgent + " contentDisposition:" + contentDisposition + " mimeType:" + mimeType + " contentLength:" + contentLength);
+        }
     }
 
 
@@ -97,16 +109,20 @@ public class StableWebView extends WebView {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.d(TAG, "shouldOverrideUrlLoading---> url:" + url);
-            if (isHttpProtocol(url) && !isDownloadFile(url)) {
+
+            //业务需要可做处理
+            redirectionJudge(view, url);
+
+            if (SchemeUtil.isHttpProtocol(url) && !SchemeUtil.isDownloadFile(url)) {
                 return false;
             }
 
-            if (isHttpProtocol(url) && isDownloadFile(url)) {
+            if (SchemeUtil.isHttpProtocol(url) && SchemeUtil.isDownloadFile(url)) {
                 jumpTo3rdBrowserView(url);
                 return true;
             }
 
-            if (!isHttpProtocol(url)) {
+            if (!SchemeUtil.isHttpProtocol(url)) {
                 boolean isValid = SchemeUtil.isSchemeValid(context, url);
                 if (isValid) {
                     jumpTo3rdBrowserView(url);
@@ -122,7 +138,9 @@ public class StableWebView extends WebView {
          * 重定向分析：
          * 1、是最普通的http url【不含.doc .apk等下载url】
          * 2、下载的http url【如.doc .apk等】
+         * 3、下载的图片 url 【如.png等】
          * 3、非http或https自定义url
+         *
          * @param view
          * @param request
          * @return
@@ -134,16 +152,19 @@ public class StableWebView extends WebView {
             Log.d(TAG, "shouldOverrideUrlLoading new---> url:" + request.getUrl());
             String url = (request.getUrl()).toString();
 
-            if (isHttpProtocol(url) && !isDownloadFile(url)) {
+            //业务需要可做处理
+            redirectionJudge(view, url);
+
+            if (SchemeUtil.isHttpProtocol(url) && !SchemeUtil.isDownloadFile(url)) {
                 return false;
             }
 
-            if (isHttpProtocol(url) && isDownloadFile(url)) {
+            if (SchemeUtil.isHttpProtocol(url) && SchemeUtil.isDownloadFile(url)) {
                 jumpTo3rdBrowserView(url);
                 return true;
             }
 
-            if (!isHttpProtocol(url)) {
+            if (!SchemeUtil.isHttpProtocol(url)) {
                 boolean isValid = SchemeUtil.isSchemeValid(context, url);
                 if (isValid) {
                     jumpTo3rdBrowserView(url);
@@ -156,30 +177,20 @@ public class StableWebView extends WebView {
         }
 
         /**
-         * 是否是Http协议
+         * 判断是否做了重定向
          *
+         * @param view
          * @param url
-         * @return
          */
-        private boolean isHttpProtocol(String url) {
-            if (url.startsWith("http") || url.startsWith("https") || url.startsWith("www")) {
-                return true;
+        private void redirectionJudge(WebView view, String url) {
+            WebView.HitTestResult hit = view.getHitTestResult();
+            //hit.getExtra()为null或者hit.getType() == 0都表示即将加载的URL会发生重定向，需要做拦截处理
+            if (TextUtils.isEmpty(hit.getExtra()) || hit.getType() == 0) {
+                //通过判断开头协议就可解决大部分重定向问题了，有另外的需求可以在此判断下操作
+                Log.d("重定向", "重定向: " + hit.getType() + " && EXTRA（）" + hit.getExtra() + "------");
+                Log.d("重定向", "GetURL: " + view.getUrl() + "\n" + "getOriginalUrl()" + view.getOriginalUrl());
+                Log.d("重定向", "URL: " + url);
             }
-            return false;
-        }
-
-
-        /**
-         * 是否是office在线文档
-         *
-         * @param url
-         * @return
-         */
-        private boolean isDownloadFile(String url) {
-            if (url.endsWith(".apk") || url.endsWith(".doc") || url.endsWith(".docx") || url.endsWith("xls") || url.endsWith("xlsx") || url.endsWith("ppt") || url.endsWith("pptx")) {
-                return true;
-            }
-            return false;
         }
 
         @Override
@@ -368,10 +379,8 @@ public class StableWebView extends WebView {
     private static void jumpTo3rdBrowserView(String url) {
         Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
-        //预览doc文件
+        //预览doc文件/预览图片
         intent.setData(Uri.parse(url));
-        //预览图片
-        //intent.setData(Uri.parse(IMAGE_URL));
         if (context instanceof Activity) {
             context.startActivity(intent);
         }
