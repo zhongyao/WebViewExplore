@@ -110,6 +110,8 @@ public class StableWebView extends WebView {
                 boolean isValid = SchemeUtil.isSchemeValid(context, url);
                 if (isValid) {
                     jumpTo3rdBrowserView(url);
+                } else {
+                    Log.d(TAG, "此scheme无效[比如手机中未安装该app]");
                 }
                 return true;
             }
@@ -145,6 +147,8 @@ public class StableWebView extends WebView {
                 boolean isValid = SchemeUtil.isSchemeValid(context, url);
                 if (isValid) {
                     jumpTo3rdBrowserView(url);
+                } else {
+                    Log.d(TAG, "此scheme无效[比如手机中未安装该app]");
                 }
                 return true;
             }
