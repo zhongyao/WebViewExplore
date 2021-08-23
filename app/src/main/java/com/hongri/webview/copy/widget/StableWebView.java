@@ -26,6 +26,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.hongri.webview.util.SchemeUtil;
+
 /**
  * Create by hongri on 2021/7/30
  * Description: WebView自定义组件
@@ -95,28 +97,54 @@ public class StableWebView extends WebView {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.d(TAG, "shouldOverrideUrlLoading---> url:" + url);
-            if (isHttpProtocol(url)) {
-                if (isOfficeFile(url)) {
+            if (isHttpProtocol(url) && !isDownloadFile(url)) {
+                return false;
+            }
+
+            if (isHttpProtocol(url) && isDownloadFile(url)) {
+                jumpTo3rdBrowserView(url);
+                return true;
+            }
+
+            if (!isHttpProtocol(url)) {
+                boolean isValid = SchemeUtil.isSchemeValid(context, url);
+                if (isValid) {
                     jumpTo3rdBrowserView(url);
-                } else {
-                    view.loadUrl(url);
                 }
                 return true;
             }
             return false;
         }
 
+        /**
+         * 重定向分析：
+         * 1、是最普通的http url【不含.doc .apk等下载url】
+         * 2、下载的http url【如.doc .apk等】
+         * 3、非http或https自定义url
+         * @param view
+         * @param request
+         * @return
+         */
         //Android7.0之后的方法
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             Log.d(TAG, "shouldOverrideUrlLoading new---> url:" + request.getUrl());
             String url = (request.getUrl()).toString();
-            if (isHttpProtocol(url)) {
-                if (isOfficeFile(url)) {
+
+            if (isHttpProtocol(url) && !isDownloadFile(url)) {
+                return false;
+            }
+
+            if (isHttpProtocol(url) && isDownloadFile(url)) {
+                jumpTo3rdBrowserView(url);
+                return true;
+            }
+
+            if (!isHttpProtocol(url)) {
+                boolean isValid = SchemeUtil.isSchemeValid(context, url);
+                if (isValid) {
                     jumpTo3rdBrowserView(url);
-                } else {
-                    view.loadUrl(url);
                 }
                 return true;
             }
@@ -143,8 +171,8 @@ public class StableWebView extends WebView {
          * @param url
          * @return
          */
-        private boolean isOfficeFile(String url) {
-            if (url.endsWith(".doc") || url.endsWith(".docx") || url.endsWith("xls") || url.endsWith("xlsx") || url.endsWith("ppt") || url.endsWith("pptx")) {
+        private boolean isDownloadFile(String url) {
+            if (url.endsWith(".apk") || url.endsWith(".doc") || url.endsWith(".docx") || url.endsWith("xls") || url.endsWith("xlsx") || url.endsWith("ppt") || url.endsWith("pptx")) {
                 return true;
             }
             return false;

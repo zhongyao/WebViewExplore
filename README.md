@@ -156,10 +156,16 @@
         // 获取到UserAgentString
         String userAgent = settings.getUserAgentString();
 ''  
+
+
+
+#### WebView重定向需要考虑的case：
+##### 1、是最普通的http url【不含.doc .apk等下载url】
+##### 2、下载的http url【如.doc .apk等】
+##### 3、非http或https自定义url 【如 "weixin://  alipays://等】 
   
   
-  
-##### Android打开office文档的方案如下：
+#### Android打开office文档的方案如下：
 ##### 1、调用第三方的office软件，缺点--不安全。
 ##### 2、自己解析office文件并自定义控件显示，缺点--工作量非常庞大
 ##### 3、将office文件转html格式，使用WebView展示，缺点--office转html的工作太过复杂耗时

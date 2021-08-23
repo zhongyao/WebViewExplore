@@ -15,7 +15,9 @@ import com.hongri.webview.copy.widget.StableWebView;
  * 参考：https://blog.csdn.net/u011791526/article/details/73088768
  */
 public class DocWebViewActivity extends Activity {
-    private static final String URL = "https://www.baidu.com";
+//    private static final String URL = "https://www.baidu.com";
+    private static final String URL = "https://b23.tv/tio1Wz";
+
 
     /**
      * 第三方在线预览工具【微软】的测试url BEGIN
