@@ -7,6 +7,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Create by zhongyao on 2021/5/26
@@ -55,7 +56,7 @@ public class SchemeUtil {
      * @return
      */
     public static boolean isDownloadFile(String url) {
-        if ( isImageFile(url) || url.endsWith(".apk") || url.endsWith(".doc") || url.endsWith(".docx") || url.endsWith("xls") || url.endsWith("xlsx") || url.endsWith("ppt") || url.endsWith("pptx")) {
+        if (url.endsWith(".apk") || url.endsWith(".doc") || url.endsWith(".docx") || url.endsWith("xls") || url.endsWith("xlsx") || url.endsWith("ppt") || url.endsWith("pptx")) {
             return true;
         }
         return false;
@@ -67,4 +68,20 @@ public class SchemeUtil {
         }
         return false;
     }
+
+    /**
+     * 判断一个url是否为图片url【更准确】
+     *
+     * @param url
+     * @return
+     */
+    public static boolean isImgUrl(String url) {
+        if (url == null || url.trim().length() == 0)
+            return false;
+        return IMG_URL.matcher(url).matches();
+    }
+
+
+    private final static Pattern IMG_URL = Pattern
+            .compile(".*?(gif|jpeg|png|jpg|bmp)");
 }

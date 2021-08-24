@@ -19,6 +19,7 @@ public class DocWebViewActivity extends Activity {
 //    private static final String URL = "https://www.baidu.com";
 //    private static final String URL = "https://zao.place.fun/doc/reportguide";
     private static final String URL = "http://stocardapp.s3-external-3.amazonaws.com/ios/icons/1001tur@2x.png";
+//    private static final String URL = "https://pics2.baidu.com/feed/b3fb43166d224f4a016ca8b721c2925b9922d15f.png?token=f6bf1d5370a8c82749779568c13ca255";
 //    private static final String URL = "https://b23.tv/tio1Wz";
 
 
