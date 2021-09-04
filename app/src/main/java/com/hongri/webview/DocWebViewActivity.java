@@ -60,4 +60,28 @@ public class DocWebViewActivity extends Activity {
         //intent.setData(Uri.parse(IMAGE_URL));
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (stableWebView != null) {
+            stableWebView.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (stableWebView != null) {
+            stableWebView.onPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (stableWebView != null) {
+            stableWebView.destroy();
+        }
+    }
 }

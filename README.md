@@ -171,6 +171,15 @@
 ##### 3、将office文件转html格式，使用WebView展示，缺点--office转html的工作太过复杂耗时
 ##### 4、使用第三方的在线预览工具，缺点--不安全
 ##### 参考[Android打开doc、xlsx、ppt等office文档解决方案](https://blog.csdn.net/u011791526/article/details/73088768) 
+
+
+#### Android WebView播放音乐属性：
+#####  //是否支持播放音乐
+#####  ws.setPluginState(WebSettings.PluginState.ON);
+#####  ws.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+      
+#####  //是否需要用户点击才播放
+#####  ws.setMediaPlaybackRequiresUserGesture(true);
   
   
 ##### 参考：

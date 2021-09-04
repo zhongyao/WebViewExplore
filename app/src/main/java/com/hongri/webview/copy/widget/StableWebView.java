@@ -76,6 +76,14 @@ public class StableWebView extends WebView {
         ws.setDomStorageEnabled(true);
         ws.setJavaScriptCanOpenWindowsAutomatically(true);//允许JS Alert对话框等打开【如果业务中无此业务，建议将此项关闭】
         ws.setSupportMultipleWindows(true);// 新加
+
+        //是否支持播放音乐
+        ws.setPluginState(WebSettings.PluginState.ON);
+        ws.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+
+        //是否需要用户点击才播放
+        ws.setMediaPlaybackRequiresUserGesture(true);
+
         setWebChromeClient(new XWebChromeClient());
         setWebViewClient(new XWebViewClient());
 
