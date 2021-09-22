@@ -23,11 +23,11 @@ public class DocWebViewActivity extends Activity {
     /**
      * QQ音乐
      */
-    private static final String URL = "https://c.y.qq.com/base/fcgi-bin/u?__=AHs10Y4q";
+//    private static final String URL = "https://c.y.qq.com/base/fcgi-bin/u?__=AHs10Y4q";
     /**
      * b站
      */
-//    private static final String URL = "https://b23.tv/tio1Wz";
+    private static final String URL = "https://b23.tv/tio1Wz";
 //     private static final String URL = "https://b23.tv/8aU1pQ";
     /**
      * 快手

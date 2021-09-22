@@ -43,6 +43,10 @@ public class StableWebView extends WebView {
     private boolean isScrolling = false;
     private boolean scroll_disabled = false;
     private static Context context;
+    /**
+     * 此属性用于解决--首次进入三方页面时，页面会自动跳转的问题。
+     */
+    private boolean isClickWeb = false;
 
     public StableWebView(Context context) {
         super(context);
@@ -105,7 +109,7 @@ public class StableWebView extends WebView {
     }
 
 
-    public static class XWebViewClient extends WebViewClient {
+    public class XWebViewClient extends WebViewClient {
 
         /**
          * 拦截/重定向：
@@ -177,14 +181,15 @@ public class StableWebView extends WebView {
             }
 
             if (SchemeUtil.isHttpProtocol(url) && SchemeUtil.isDownloadFile(url)) {
-                jumpTo3rdBrowserView(url);
-                return true;
+                if (isClickWeb) {
+                    jumpTo3rdBrowserView(url);
+                    return true;
+                }
             }
 
             if (!SchemeUtil.isHttpProtocol(url)) {
                 boolean isValid = SchemeUtil.isSchemeValid(context, url);
-                //点击快手web页面时 hasGesture依然返回false，故添加此处理
-                if (isValid && (hasGesture || SchemeUtil.isKuaiShou(url))) {
+                if (isValid && isClickWeb) {
                     jumpTo3rdBrowserView(url);
                 } else {
                     Log.d(TAG, "此scheme无效[比如手机中未安装该app]");
@@ -382,6 +387,7 @@ public class StableWebView extends WebView {
         //告知父Container，WebView消费滑动事件，避免父类拦截
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
             Log.d(TAG, "ACTION_DOWN");
+            isClickWeb = true;
             ViewParent parent = findViewParentIfNeeds(this);
             if (parent != null) {
                 parent.requestDisallowInterceptTouchEvent(true);
