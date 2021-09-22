@@ -30,6 +30,8 @@ import android.webkit.WebViewClient;
 
 import com.hongri.webview.util.SchemeUtil;
 
+import java.util.Map;
+
 /**
  * Create by hongri on 2021/7/30
  * Description: WebView自定义组件
@@ -112,7 +114,8 @@ public class StableWebView extends WebView {
          *
          * @param view
          * @param url
-         * @return
+         * @return true: 表示当前url已经加载完成，即使url还会重定向都不会再进行加载
+         * false: 表示此url默认由系统处理，该重定向还是重定向，直到加载完成
          */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -151,14 +154,20 @@ public class StableWebView extends WebView {
          *
          * @param view
          * @param request
-         * @return
+         * @return true: 表示当前url已经加载完成，即使url还会重定向都不会再进行加载
+         * false: 表示此url默认由系统处理，该重定向还是重定向，直到加载完成
          */
         //Android7.0之后的方法
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             Log.d(TAG, "shouldOverrideUrlLoading new---> url:" + request.getUrl());
+
+            analysisRequest(request);
+
             String url = (request.getUrl()).toString();
+            boolean hasGesture = request.hasGesture();
+            boolean isRedirect = request.isRedirect();
 
             //业务需要可做处理
             redirectionJudge(view, url);
@@ -174,7 +183,8 @@ public class StableWebView extends WebView {
 
             if (!SchemeUtil.isHttpProtocol(url)) {
                 boolean isValid = SchemeUtil.isSchemeValid(context, url);
-                if (isValid) {
+                //点击快手web页面时 hasGesture依然返回false，故添加此处理
+                if (isValid && (hasGesture || SchemeUtil.isKuaiShou(url))) {
                     jumpTo3rdBrowserView(url);
                 } else {
                     Log.d(TAG, "此scheme无效[比如手机中未安装该app]");
@@ -182,6 +192,19 @@ public class StableWebView extends WebView {
                 return true;
             }
             return false;
+        }
+
+        private void analysisRequest(WebResourceRequest request) {
+            String method = request.getMethod();
+            boolean hasGesture = request.hasGesture();
+            boolean isRedirect = false;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                isRedirect = request.isRedirect();
+            }
+            boolean isForMainFrame = request.isForMainFrame();
+            Map<String, String> requestHeaders = request.getRequestHeaders();
+
+            Log.d(TAG, "method:" + method + " hasGesture:" + hasGesture + " isRedirect:" + isRedirect + " isForMainFrame:" + isForMainFrame + " requestHeaders:" + (requestHeaders != null ? requestHeaders.toString() : ""));
         }
 
         /**
@@ -195,9 +218,7 @@ public class StableWebView extends WebView {
             //hit.getExtra()为null或者hit.getType() == 0都表示即将加载的URL会发生重定向，需要做拦截处理
             if (TextUtils.isEmpty(hit.getExtra()) || hit.getType() == 0) {
                 //通过判断开头协议就可解决大部分重定向问题了，有另外的需求可以在此判断下操作
-                Log.d("重定向", "重定向: " + hit.getType() + " && EXTRA（）" + hit.getExtra() + "------");
-                Log.d("重定向", "GetURL: " + view.getUrl() + "\n" + "getOriginalUrl()" + view.getOriginalUrl());
-                Log.d("重定向", "URL: " + url);
+                Log.d(TAG, "发生重定向 ---> url: " + url + " hit.getType(): " + hit.getType() + " hit.getExtra():" + hit.getExtra() + "------" + " view.getUrl():" + view.getUrl() + " getOriginalUrl():" + view.getOriginalUrl());
             }
         }
 

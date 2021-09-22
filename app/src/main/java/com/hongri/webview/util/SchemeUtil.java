@@ -84,4 +84,63 @@ public class SchemeUtil {
 
     private final static Pattern IMG_URL = Pattern
             .compile(".*?(gif|jpeg|png|jpg|bmp)");
+
+
+    /**
+     * 是否是优酷scheme
+     *
+     * @param url
+     * @return
+     */
+    public static boolean isYouKu(String url) {
+        return url.startsWith("youku://");
+    }
+
+    /**
+     * 是否是爱奇艺scheme
+     *
+     * @param url
+     * @return
+     */
+    public static boolean isIQiYi(String url) {
+        return url.startsWith("iqiyi://");
+    }
+
+    /**
+     * 是否是腾讯视频scheme
+     *
+     * @param url
+     * @return
+     */
+    public static boolean isTxVideo(String url) {
+        return url.startsWith("txvideo://");
+    }
+
+    /**
+     * 是否是B站scheme
+     * @param url
+     * @return
+     */
+    public static boolean isBiliBiliVideo(String url) {
+        return url.startsWith("bilibili://");
+    }
+
+    /**
+     * 快手
+     * @param url
+     * @return
+     */
+    public static boolean isKuaiShou(String url) {
+        return url.startsWith("kwai://");
+    }
+
+    /**
+     * 抖音
+     * @param url
+     * @return
+     */
+    public static boolean isDouYin(String url) {
+        return url.startsWith("snssdk1128://");
+    }
+
 }

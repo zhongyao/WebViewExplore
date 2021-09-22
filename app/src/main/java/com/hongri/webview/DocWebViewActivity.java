@@ -18,9 +18,41 @@ import com.hongri.webview.util.SchemeUtil;
 public class DocWebViewActivity extends Activity {
 //    private static final String URL = "https://www.baidu.com";
 //    private static final String URL = "https://zao.place.fun/doc/reportguide";
-    private static final String URL = "http://stocardapp.s3-external-3.amazonaws.com/ios/icons/1001tur@2x.png";
+//    private static final String URL = "http://stocardapp.s3-external-3.amazonaws.com/ios/icons/1001tur@2x.png";
 //    private static final String URL = "https://pics2.baidu.com/feed/b3fb43166d224f4a016ca8b721c2925b9922d15f.png?token=f6bf1d5370a8c82749779568c13ca255";
+    /**
+     * QQ音乐
+     */
+    private static final String URL = "https://c.y.qq.com/base/fcgi-bin/u?__=AHs10Y4q";
+    /**
+     * b站
+     */
 //    private static final String URL = "https://b23.tv/tio1Wz";
+//     private static final String URL = "https://b23.tv/8aU1pQ";
+    /**
+     * 快手
+     */
+//    private static final String URL = "https://v.kuaishou.com/bLZDVd";
+
+    /**
+     * 腾讯视频
+     */
+//    private static final String URL = "http://m.v.qq.com/play.html?cid=mzc00200owmazan&vid=v0040t6310z&url_from=share&second_share=0&share_from=copy";
+
+    /**
+     * 优酷视频
+     */
+//    private static final String URL = "https://v.youku.com/v_show/id_XNDM3NTQ2NzgzNg==.html?x&sharefrom=android&scene=long&playMode=&sharekey=479297530a5bd34562cb89258f42ae8c2";
+
+    /**
+     * 爱奇艺
+     */
+//      private static final String URL = "http://m.iqiyi.com/v_srhoj2mz3k.html?key=b398b8ccbaeacca840073a7ee9b7e7e6&msrc=3_31_56&aid=2838564123831900&tvid=2838564123831900&cid=6&identifier=weixinv1&ftype=27&subtype=1&vip_pc=0&vip_tpc=0&isrd=1&p1=2_22_222&social_platform=link&_psc=cf47926fbbe94810bbe93abbf529adce";
+
+    /**
+     * 抖音
+     */
+//    private static final String URL = "https://v.douyin.com/dPfhDpx/";
 
 
     /**

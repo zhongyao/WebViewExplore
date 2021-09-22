@@ -163,6 +163,7 @@
 ##### 1、是最普通的http url【不含.doc .apk等下载url】
 ##### 2、下载的http url【如.doc .apk等】
 ##### 3、非http或https自定义url 【如 "weixin://  alipays://等】 
+##### 如果期望打开web页时不自动唤起app，可通过 request.hasGesture()【是否】点击来判断，如果是true才唤起第三方app。 
   
   
 #### Android打开office文档的方案如下：
