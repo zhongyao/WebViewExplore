@@ -24,10 +24,16 @@ public class DocWebViewActivity extends Activity {
      * QQ音乐
      */
 //    private static final String URL = "https://c.y.qq.com/base/fcgi-bin/u?__=AHs10Y4q";
+
+    /**
+     * 网易云音乐【可用来测试onReceivedError方法】
+      */
+    private static final String URL = "https://y.music.163.com/m/song?id=1859245776&uct=z85IrZCA+yjo1M6ORuucOA%3D%3D&app_version=8.5.20";
+
     /**
      * b站
      */
-    private static final String URL = "https://b23.tv/tio1Wz";
+//    private static final String URL = "https://b23.tv/tio1Wz";
 //     private static final String URL = "https://b23.tv/8aU1pQ";
     /**
      * 快手
@@ -53,6 +59,9 @@ public class DocWebViewActivity extends Activity {
      * 抖音
      */
 //    private static final String URL = "https://v.douyin.com/dPfhDpx/";
+//    private static final String URL = "https://y.music.163.com/m/song?id=1859245776&uct=z85IrZCA+yjo1M6ORuucOA%3D%3D&app_version=8.5.20";
+
+
 
 
     /**

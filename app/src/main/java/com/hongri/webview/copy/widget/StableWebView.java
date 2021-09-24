@@ -247,33 +247,54 @@ public class StableWebView extends WebView {
          * @param description
          * @param failingUrl
          */
-        //Android6.0之前的方法
+        //Android6.0之前的方法 【在新版本中也可能被调用，所以加上一个判断，防止重复显示】
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 // 断网或者网络连接超时
-                if (errorCode == ERROR_HOST_LOOKUP || errorCode == ERROR_CONNECT || errorCode == ERROR_TIMEOUT) {
-                    view.loadUrl("about:blank"); // 避免出现默认的错误界面
-                    Log.d(TAG, "onReceivedError---> " + "errorCode:" + errorCode + " description:" + description + " failingUrl:" + failingUrl);
-                    // 在这里可以考虑显示自定义错误页
-                    // showErrorPage();
-                }
+                showReceivedErrorPage(view, errorCode, description, failingUrl);
             }
         }
 
+        /**
+         * 此方法中加载错误页面的时候，需要判断下 isForMainFrame 是否为true 亦或者 当前url跟加载的url是否为同一个url。
+         *
+         * @param view
+         * @param request
+         * @param error
+         */
         //Android6.0之后的方法
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             super.onReceivedError(view, request, error);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                String url = request.getUrl().toString();
+                int errorCode = error.getErrorCode();
+                String description = error.getDescription().toString();
+                Log.d(TAG, "onReceivedError---> " + " url:" + url + "errorCode:" + errorCode + " description:" + description + " failingUrl:" + url + " request.isForMainFrame():" + request.isForMainFrame());
                 // 如果当前网络请求是为main frame创建的，则显示错误页
-                if (request.isForMainFrame()) {
-                    this.onReceivedError(view, error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString());
-                } else {
-                    // do nothing
+                if (request.isForMainFrame() || url.equals(getUrl())) {
+                    showReceivedErrorPage(view, error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString());
                 }
+            }
+        }
+
+        /**
+         * 展示错误页面
+         * @param view
+         * @param errorCode
+         * @param description
+         * @param failingUrl
+         */
+        private void showReceivedErrorPage(WebView view, int errorCode, String description, String failingUrl) {
+            // 断网或者网络连接超时
+            if (errorCode == ERROR_HOST_LOOKUP || errorCode == ERROR_CONNECT || errorCode == ERROR_TIMEOUT) {
+                view.loadUrl("about:blank"); // 避免出现默认的错误界面
+                Log.d(TAG, "onReceivedError---> " + "errorCode:" + errorCode + " description:" + description + " failingUrl:" + failingUrl);
+                // 在这里可以考虑显示自定义错误页
+                // showErrorPage();
             }
         }
 

@@ -166,7 +166,6 @@
 #####【deprecated】如果期望打开web页时不自动唤起app，可通过 request.hasGesture()【是否】点击来判断，如果是true才唤起第三方app。（此种方案有时不太准确，故可采用下面方案）
 #####【recommend】定义一个boolean值如:isClickWeb = false,在onTouchEvent DOWN方法中，将其赋值为true。在必要位置添加判断即可【具体可参考代码】
   
-  
 #### Android打开office文档的方案如下：
 ##### 1、调用第三方的office软件，缺点--不安全。
 ##### 2、自己解析office文件并自定义控件显示，缺点--工作量非常庞大
@@ -182,6 +181,10 @@
       
 #####  //是否需要用户点击才播放
 #####  ws.setMediaPlaybackRequiresUserGesture(true);
+
+#### WebView加载某些url(如网易云音乐)是出现错误的问题【ERR_NAME_NOT_RESOLVED】：
+##### 在onReceivedError中判断，request.isForMainFrame() 为true，则再进行相关错误页的加载。
+##### 使用url.equals(getUrl())可以达到相同的效果。
   
   
 ##### 参考：
