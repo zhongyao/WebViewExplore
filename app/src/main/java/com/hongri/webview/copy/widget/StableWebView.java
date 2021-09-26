@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -28,6 +29,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.hongri.webview.fragment.IDialogListener;
+import com.hongri.webview.fragment.OpenAppFragment;
 import com.hongri.webview.util.SchemeUtil;
 
 import java.util.Map;
@@ -125,28 +128,7 @@ public class StableWebView extends WebView {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.d(TAG, "shouldOverrideUrlLoading---> url:" + url);
 
-            //业务需要可做处理
-            redirectionJudge(view, url);
-
-            if (SchemeUtil.isHttpProtocol(url) && !SchemeUtil.isDownloadFile(url)) {
-                return false;
-            }
-
-            if (SchemeUtil.isHttpProtocol(url) && SchemeUtil.isDownloadFile(url)) {
-                jumpTo3rdBrowserView(url);
-                return true;
-            }
-
-            if (!SchemeUtil.isHttpProtocol(url)) {
-                boolean isValid = SchemeUtil.isSchemeValid(context, url);
-                if (isValid) {
-                    jumpTo3rdBrowserView(url);
-                } else {
-                    Log.d(TAG, "此scheme无效[比如手机中未安装该app]");
-                }
-                return true;
-            }
-            return false;
+            return shouldOverride(view, url);
         }
 
         /**
@@ -173,6 +155,10 @@ public class StableWebView extends WebView {
             boolean hasGesture = request.hasGesture();
             boolean isRedirect = request.isRedirect();
 
+            return shouldOverride(view, url);
+        }
+
+        private boolean shouldOverride(WebView view, final String url) {
             //业务需要可做处理
             redirectionJudge(view, url);
 
@@ -182,7 +168,7 @@ public class StableWebView extends WebView {
 
             if (SchemeUtil.isHttpProtocol(url) && SchemeUtil.isDownloadFile(url)) {
                 if (isClickWeb) {
-                    jumpTo3rdBrowserView(url);
+                    openDialog(url);
                     return true;
                 }
             }
@@ -190,7 +176,7 @@ public class StableWebView extends WebView {
             if (!SchemeUtil.isHttpProtocol(url)) {
                 boolean isValid = SchemeUtil.isSchemeValid(context, url);
                 if (isValid && isClickWeb) {
-                    jumpTo3rdBrowserView(url);
+                    openDialog(url);
                 } else {
                     Log.d(TAG, "此scheme无效[比如手机中未安装该app]");
                 }
@@ -198,6 +184,28 @@ public class StableWebView extends WebView {
             }
             return false;
         }
+
+        private void openDialog(final String url) {
+            if (openAppFragment != null && context instanceof FragmentActivity) {
+                FragmentActivity activity = (FragmentActivity) context;
+                if (!openAppFragment.isAdded()) {
+                    openAppFragment.show(activity.getSupportFragmentManager(), "dialog");
+                    openAppFragment.setListener(new IDialogListener() {
+                        @Override
+                        public void cancel() {
+
+                        }
+
+                        @Override
+                        public void confirm() {
+                            jumpTo3rdBrowserView(url);
+                        }
+                    });
+                }
+            }
+        }
+
+        ;
 
         private void analysisRequest(WebResourceRequest request) {
             String method = request.getMethod();
@@ -283,6 +291,7 @@ public class StableWebView extends WebView {
 
         /**
          * 展示错误页面
+         *
          * @param view
          * @param errorCode
          * @param description
@@ -408,6 +417,7 @@ public class StableWebView extends WebView {
         //告知父Container，WebView消费滑动事件，避免父类拦截
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
             Log.d(TAG, "ACTION_DOWN");
+            initDialog();
             isClickWeb = true;
             ViewParent parent = findViewParentIfNeeds(this);
             if (parent != null) {
@@ -448,5 +458,14 @@ public class StableWebView extends WebView {
 
     public interface IWebTitleCallBack {
         void onReceived(String title);
+    }
+
+
+    private OpenAppFragment openAppFragment;
+
+    private void initDialog() {
+        if (openAppFragment == null) {
+            openAppFragment = new OpenAppFragment();
+        }
     }
 }

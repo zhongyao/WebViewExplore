@@ -28,7 +28,8 @@
             </intent-filter>-->
         </activity>
         <activity android:name=".copy.NativeToJsBridgeActivity"></activity>
-        <activity android:name=".DocWebViewActivity">
+        <activity android:name=".DocWebViewActivity"
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

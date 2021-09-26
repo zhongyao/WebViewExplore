@@ -1,8 +1,8 @@
 package com.hongri.webview;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import com.hongri.webview.copy.APIWebViewActivity;
@@ -19,7 +19,7 @@ import com.hongri.webview.headanim.ArticleHeadAnimActivity;
  * https://blog.csdn.net/carson_ho/article/details/64904691#commentBox (WebView与Js交互)
  * 启动类。。
  */
-public class HomeActivity extends Activity implements View.OnClickListener {
+public class HomeActivity extends FragmentActivity implements View.OnClickListener {
 
     private Button btn1, btn2, btn3,btnJS, btn4, btn5;
 
