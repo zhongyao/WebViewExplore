@@ -187,6 +187,15 @@
 #### WebView加载某些url(如网易云音乐)是出现错误的问题【ERR_NAME_NOT_RESOLVED】：
 ##### 在onReceivedError中判断，request.isForMainFrame() 为true，则再进行相关错误页的加载。
 ##### 使用url.equals(getUrl())可以达到相同的效果。
+
+
+#### HTTP常见状态码:
+##### 1开头：临时响应
+##### 2开头：成功
+##### 3开头：重定向
+##### 4开头：请求错误
+##### 5开头：服务器错误
+##### [HTTP常见状态码 200 301 302 404 500](https://www.cnblogs.com/starof/p/5035119.html)
   
   
 ##### 参考：
