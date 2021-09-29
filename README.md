@@ -51,11 +51,13 @@
 ##### （3）每个请求都是串行的
 
 
-##### 针对以上Android WebView的性能问题，有如下三种解决方案：
-##### 1、H5的缓存机制（WebView自带）
-##### 2、资源预加载
-##### 3、资源拦截
-
+##### 针对以上Android WebView的性能优化，有如下几种解决方案：
+##### 1、H5的缓存机制，如离线缓存（WebView自带）
+##### 2、资源预加载【shouldInterceptRequest中处理】
+##### 3、内存泄漏【主要是7.0以下，可开启一个Activity页面的新进程】
+##### 4、白屏【onReceivedSslError中处理】
+##### 5、重定向
+[Android WebView 性能优化](https://zhaoshuming.github.io/2019/09/26/android-webview/)
 
   
 ##### 1.1、Android自带的缓存机制有5种： 

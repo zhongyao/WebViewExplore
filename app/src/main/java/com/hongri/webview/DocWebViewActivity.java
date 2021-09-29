@@ -27,7 +27,7 @@ public class DocWebViewActivity extends FragmentActivity {
     /**
      * QQ音乐
      */
-    private static final String URL = "https://c.y.qq.com/base/fcgi-bin/u?__=AHs10Y4q";
+//    private static final String URL = "https://c.y.qq.com/base/fcgi-bin/u?__=AHs10Y4q";
 //    private static final String URL = "https://c.y.qq.com/base/fcgi-bin/u?__=YMGeZu4w";
 //    private static final String URL = "qqmusic://qq.com/ui/openUrl?p={\"url\":\"https://i.y.qq.com/v8/playsong.html?ADTAG=cbshare&_wv=1&appshare=iphone&appsongtype=1&channelId=10036163&from_id=7782623177&from_idtype=10014&from_name=JUU1JUJGJThEJUU0JUJEJThGJUU1JTg4JUFCJUU2JUI1JTgxJUU2JUIzJUFBJUVGJUJDJTlBMTAwJUU5JUE2JTk2JUU1JUJGJTgzJUU5JTg1JUI4JUU0JUJDJUE0JUU2JTg0JTlGJUU1JThEJThFJUU4JUFGJUFE&hosteuin=&media_mid=001Mt4nx2N9bc1&openinqqmusic=1&platform=1&sharefrom=gedan&songid=&songmid=001Mt4nx2N9bc1&source=qq&type=0\"}&source=https://i.y.qq.com/v8/playsong.html?&_wv=1&appshare=iphone&appsongtype=1&channelId=10036163&from_id=7782623177&from_idtype=10014&from_name=JUU1JUJGJThEJUU0JUJEJThGJUU1JTg4JUFCJUU2JUI1JTgxJUU2JUIzJUFBJUVGJUJDJTlBMTAwJUU5JUE2JTk2JUU1JUJGJTgzJUU5JTg1JUI4JUU0JUJDJUE0JUU2JTg0JTlGJUU1JThEJThFJUU4JUFGJUFE&hosteuin=&media_mid=001Mt4nx2N9bc1&openinqqmusic=1&platform=1&sharefrom=gedan&songid=&songmid=001Mt4nx2N9bc1&source=qq&type=0&ADTAG=cbshare%7Cdqydttc4 }";
 
@@ -40,7 +40,7 @@ public class DocWebViewActivity extends FragmentActivity {
     /**
      * b站
      */
-//    private static final String URL = "https://b23.tv/tio1Wz";
+    private static final String URL = "https://b23.tv/tio1Wz";
 //     private static final String URL = "https://b23.tv/8aU1pQ";
     /**
      * 快手

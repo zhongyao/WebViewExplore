@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
@@ -33,6 +34,8 @@ import com.hongri.webview.fragment.IDialogListener;
 import com.hongri.webview.fragment.OpenAppFragment;
 import com.hongri.webview.util.SchemeUtil;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -248,6 +251,44 @@ public class StableWebView extends WebView {
         }
 
         /**
+         * 【实现预加载】
+         * 有时候一个页面资源比较多，图片，CSS，js比较多，还引用了JQuery这种庞然巨兽，
+         * 从加载到页面渲染完成需要比较长的时间，有一个解决方案是将这些资源打包进APK里面，
+         * 然后当页面加载这些资源的时候让它从本地获取，这样可以提升加载速度也能减少服务器压力。
+         */
+        @Nullable
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            if (request == null) {
+                return null;
+            }
+            String url = request.getUrl().toString();
+            Log.d(TAG, "shouldInterceptRequest---> " + url);
+            return getWebResourceResponse(url);
+        }
+
+        protected WebResourceResponse getWebResourceResponse(String url) {
+            //此处[tag]等需要跟服务端协商好,再处理
+            if (url.contains("[tag]")) {
+                try {
+                    String localPath = url.replaceFirst("^http.*[tag]\\]", "");
+                    InputStream is = getContext().getAssets().open(localPath);
+                    Log.d(TAG, "shouldInterceptRequest: localPath " + localPath);
+                    String mimeType = "text/javascript";
+                    if (localPath.endsWith("css")) {
+                        mimeType = "text/css";
+                    }
+                    return new WebResourceResponse(mimeType, "UTF-8", is);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        }
+
+        /**
          * WEB页面加载错误时回调，这些错误通常都是由无法与服务器正常连接引起的。
          *
          * @param view
@@ -335,6 +376,7 @@ public class StableWebView extends WebView {
         }
 
         /**
+         * 【解决白屏问题】
          * 如SSL证书无效时调用
          *
          * @param view
@@ -343,6 +385,8 @@ public class StableWebView extends WebView {
          */
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            //此处处理可避免SSL证书无效的页面白屏
+            handler.proceed();
             super.onReceivedSslError(view, handler, error);
             Log.d(TAG, "onReceivedSslError---> error = " + error);
         }
