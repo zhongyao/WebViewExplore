@@ -196,6 +196,14 @@
 ##### 4开头：请求错误
 ##### 5开头：服务器错误
 ##### [HTTP常见状态码 200 301 302 404 500](https://www.cnblogs.com/starof/p/5035119.html)
+
+
+#### 禁止WebView滚动事件的方法：
+##### 1、通过设置网页的高度为所需要内容的高度.【前端修改】
+##### 2、onScrollChanged 方法中添加 scrollTo(0, 0)
+##### 3、OnTouchListener 的onTouch方法中添加 return (event.getAction() == MotionEvent.ACTION_MOVE);
+##### 4、overScrollBy 中返回false
+##### 5、如果ScrollView包裹WebView，那么可以设置webView.setScrollContainer(false) 【慎用---初步验证无效】
   
   
 ##### 参考：

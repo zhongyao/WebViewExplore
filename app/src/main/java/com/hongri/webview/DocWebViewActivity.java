@@ -21,6 +21,7 @@ import com.hongri.webview.util.SchemeUtil;
  */
 public class DocWebViewActivity extends FragmentActivity {
 //    private static final String URL = "https://www.baidu.com";
+    private static final String URL = "https://m.sohu.com/a/495754815_429139?scm=0.0.0.0&spm=smwp.home.d-news2.1.1634547608038lKriPMh&_trans_=000012_uc_km";
 //    private static final String URL = "https://zao.place.fun/doc/reportguide";
 //    private static final String URL = "http://stocardapp.s3-external-3.amazonaws.com/ios/icons/1001tur@2x.png";
 //    private static final String URL = "https://pics2.baidu.com/feed/b3fb43166d224f4a016ca8b721c2925b9922d15f.png?token=f6bf1d5370a8c82749779568c13ca255";
@@ -40,7 +41,7 @@ public class DocWebViewActivity extends FragmentActivity {
     /**
      * b站
      */
-    private static final String URL = "https://b23.tv/tio1Wz";
+//    private static final String URL = "https://b23.tv/tio1Wz";
 //     private static final String URL = "https://b23.tv/8aU1pQ";
     /**
      * 快手

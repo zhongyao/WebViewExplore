@@ -18,6 +18,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewParent;
 import android.webkit.DownloadListener;
 import android.webkit.PermissionRequest;
@@ -100,10 +101,37 @@ public class StableWebView extends WebView {
         setWebViewClient(new XWebViewClient());
 
         setDownloadListener(new XDownloadListener());
+
+        //禁止WebView滑动【方法2】--- 将整个页面及控件的滚动事件完全禁止了
+//        setOnTouchListener(new XOnTouchListener());
+    }
+
+
+        //禁止WebView滑动【方法3】
+//    @Override
+//    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
+//        return !scroll_disabled && super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
+//    }
+
+    /**
+     * 隐藏滚动条
+     *
+     * @param enable
+     */
+    public void setScrollBarEnable(boolean enable) {
+        setVerticalScrollBarEnabled(enable);
+        setHorizontalScrollBarEnabled(enable);
     }
 
     public void setWebTitleCallback(IWebTitleCallBack webTitleCallback) {
         webTitleCallBack = webTitleCallback;
+    }
+
+    public static class XOnTouchListener implements OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return (event.getAction() == MotionEvent.ACTION_MOVE);
+        }
     }
 
     public static class XDownloadListener implements DownloadListener {
@@ -435,13 +463,18 @@ public class StableWebView extends WebView {
         }
     }
 
+    public void setScrollDisabled(boolean scroll_disabled) {
+        this.scroll_disabled = scroll_disabled;
+    }
+
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        if (scroll_disabled) {
-            //禁止滑动。禁止上下滑动：scrollTo(l,0);禁止左右滑动：scrollTo(0,t)
-            scrollTo(0, 0);
-        }
+        //禁止WebView滑动【方法1】--- 只是禁止了webview的页面滚动事件禁止了，但里面的控件的事件滚动没有禁止。
+//        if (scroll_disabled) {
+//            //禁止滑动。禁止上下滑动：scrollTo(l,0);禁止左右滑动：scrollTo(0,t)
+//            scrollTo(0, 0);
+//        }
     }
 
     @Override
