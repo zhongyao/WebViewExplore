@@ -3,7 +3,7 @@
 
 
 
-#### WebView调用Native的三种方式：
+### WebView调用Native的三种方式：
 
 ##### 1、通过WebView的addJavascriptInterface进行对象映射。
 
@@ -16,7 +16,7 @@
 
 
 
-#### Native调用WebView的两种方案：
+### Native调用WebView的两种方案：
 
 ##### 1、loadUrl("javascript:callJS()")：方法简洁、效率低。当不需要返回值且对性能要求较低时可以考虑使用。
 
@@ -34,25 +34,25 @@
 
 
   
-#### WebView的缓存机制：
+### WebView的缓存机制：
 
-##### Android WebView的主要性能问题：
+#### Android WebView的主要性能问题：
 ##### 1、加载速度慢
 ##### 2、消耗流量
 
 
-##### 1、H5页面加载速度慢原因：
+#### 1、H5页面加载速度慢原因：
 ##### （1）渲染速度慢
 ##### （2）页面资源加载缓慢。
 
 
-##### 2、消耗流量原因：
+#### 2、消耗流量原因：
 ##### （1）每次使用过H5页面，都需要重新加载该H5页面
 ##### （2）每加载一个H5页面，就会有较多的网络请求
 ##### （3）每个请求都是串行的
 
 
-##### 针对以上Android WebView的性能优化，有如下几种解决方案：
+#### 针对以上Android WebView的性能优化，有如下几种解决方案：
 ##### 1、H5的缓存机制，如离线缓存（WebView自带）
 ##### 2、资源预加载【shouldInterceptRequest中处理】
 ##### 3、内存泄漏【主要是7.0以下，可开启一个Activity页面的新进程】
@@ -61,7 +61,7 @@
 [Android WebView 性能优化](https://zhaoshuming.github.io/2019/09/26/android-webview/)
 
 <br><br/>  
-##### 1.1、Android自带的缓存机制有5种： 
+#### 1.1、Android自带的缓存机制有5种： 
 ##### （1）浏览器缓存机制
 ##### （2）Application Cache缓存机制
 ##### （3）Dom Storage 缓存机制
@@ -109,7 +109,7 @@
 
 
 <br><br/>
-##### 1.2、缓存模式：即告诉Android WebView 什么时候去读缓存，以哪种方式去读缓存 
+#### 1.2、缓存模式：即告诉Android WebView 什么时候去读缓存，以哪种方式去读缓存 
 ##### Android WebView 自带的缓存模式有4种：
 ##### （1）LOAD_CACHE_ONLY： 只使用缓存； 
 ##### （2）LOAD_NO_CACHE： 只从网络获取；
@@ -121,7 +121,7 @@
 
 
 <br><br/>  
-##### 2.1、资源预加载：提早加载将需使用的H5页面，即 提前构建缓存
+#### 2.1、资源预加载：提早加载将需使用的H5页面，即 提前构建缓存
 ##### 2.1.1、预加载WebView对象
 ![avatar](https://upload-images.jianshu.io/upload_images/944365-c14d7fef491bb587.png)
 ##### 
@@ -138,7 +138,7 @@
   
   
 <br><br/>
-#### WebView加载内容的几种方式：
+### WebView加载内容的几种方式：
 ##### 1、加载assets目录下的本地网页，如：
 ##### mWebView.loadUrl("file:///android_asset/html/test1.html");
 ##### 2、加载远程网页，如：
@@ -147,7 +147,7 @@
 ##### mWebView.loadDataWithBaseURL(null, "<span style=\"\">网页加载失败</span>", "text/html", "utf-8", null);
   
 <br><br/>
-#### WebView的UserAgent：
+### WebView的UserAgent：
 ##### 用户代理，是Http协议的一部分，属于头域的组成部分，简称为UA。
 ##### 是一种向访问网站提供你所使用的浏览器类型及版本、操作系统及版本、浏览器内核等信息标识。
 ##### 通过这个标识，用户所访问的网站可以显示不同的排版，从而为用户提供更好的体验或者信息统计。例如用手机访问谷歌和电脑访问是不一样的，这些是谷歌根据访问者的UA来判断的。  
@@ -162,7 +162,7 @@
 
 
 <br><br/>
-#### WebView重定向需要考虑的case：
+### WebView重定向需要考虑的case：
 ##### 1、是最普通的http url【不含.doc .apk等下载url】
 ##### 2、下载的http url【如.doc .apk等】
 ##### 3、非http或https自定义url 【如 "weixin://  alipays://等】 
@@ -170,7 +170,7 @@
 #####【recommend】定义一个boolean值如:isClickWeb = false,在onTouchEvent DOWN方法中，将其赋值为true。在必要位置添加判断即可【具体可参考代码】
   
 <br><br/>  
-#### Android打开office文档的方案如下：
+### Android打开office文档的方案如下：
 ##### 1、调用第三方的office软件，缺点--不安全。
 ##### 2、自己解析office文件并自定义控件显示，缺点--工作量非常庞大
 ##### 3、将office文件转html格式，使用WebView展示，缺点--office转html的工作太过复杂耗时
@@ -178,7 +178,7 @@
 ##### 参考[Android打开doc、xlsx、ppt等office文档解决方案](https://blog.csdn.net/u011791526/article/details/73088768) 
 
 <br><br/>
-#### Android WebView播放音乐属性：
+### Android WebView播放音乐属性：
 #####  //是否支持播放音乐
 #####  ws.setPluginState(WebSettings.PluginState.ON);
 #####  ws.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -187,12 +187,12 @@
 #####  ws.setMediaPlaybackRequiresUserGesture(true);
 
 <br><br/>
-#### WebView加载某些url(如网易云音乐)是出现错误的问题【ERR_NAME_NOT_RESOLVED】：
+### WebView加载某些url(如网易云音乐)是出现错误的问题【ERR_NAME_NOT_RESOLVED】：
 ##### 在onReceivedError中判断，request.isForMainFrame() 为true，则再进行相关错误页的加载。
 ##### 使用url.equals(getUrl())可以达到相同的效果。
 
 <br><br/>
-#### HTTP常见状态码:
+### HTTP常见状态码:
 ##### 1开头：临时响应
 ##### 2开头：成功
 ##### 3开头：重定向
@@ -201,7 +201,7 @@
 ##### [HTTP常见状态码 200 301 302 404 500](https://www.cnblogs.com/starof/p/5035119.html)
 
 <br><br/>
-#### 禁止WebView滚动事件的方法：
+### 禁止WebView滚动事件的方法：
 ##### 1、通过设置网页的高度为所需要内容的高度.【前端修改】
 ##### 2、onScrollChanged 方法中添加 scrollTo(0, 0)
 ##### 3、OnTouchListener 的onTouch方法中添加 return (event.getAction() == MotionEvent.ACTION_MOVE);
@@ -209,7 +209,7 @@
 ##### 5、如果ScrollView包裹WebView，那么可以设置webView.setScrollContainer(false) 【慎用---初步验证无效】
 
 <br><br/>
-#### url富文本预览【富链接预览】功能：
+### url富文本预览【富链接预览】功能：
 ##### 可用Android-Link-Preview开源库，原理是使用Jsoup爬虫解析。
 ##### GitHub：[Android-Link-Preview](https://github.com/LeonardoCardoso/Android-Link-Preview)  
   
