@@ -212,8 +212,16 @@
 ### url富文本预览【富链接预览】功能：
 ##### 可用Android-Link-Preview开源库，原理是使用Jsoup爬虫解析。
 ##### GitHub：[Android-Link-Preview](https://github.com/LeonardoCardoso/Android-Link-Preview)  
-  
-##### 参考：
+
+
+
+
+
+
+<br><br/>
+<br><br/>
+<br><br/>  
+#### 参考：
   [Android：手把手教你构建 全面的WebView 缓存机制 & 资源加载方案](https://www.jianshu.com/p/5e7075f4875f)
 
   
