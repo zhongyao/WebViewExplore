@@ -204,7 +204,11 @@
 ##### 3、OnTouchListener 的onTouch方法中添加 return (event.getAction() == MotionEvent.ACTION_MOVE);
 ##### 4、overScrollBy 中返回false
 ##### 5、如果ScrollView包裹WebView，那么可以设置webView.setScrollContainer(false) 【慎用---初步验证无效】
-  
+
+
+#### url富文本预览【富链接预览】功能：
+##### 可用Android-Link-Preview开源库，原理是使用Jsoup爬虫解析。
+##### GitHub：[Android-Link-Preview](https://github.com/LeonardoCardoso/Android-Link-Preview)  
   
 ##### 参考：
   [Android：手把手教你构建 全面的WebView 缓存机制 & 资源加载方案](https://www.jianshu.com/p/5e7075f4875f)
