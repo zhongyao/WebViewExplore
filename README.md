@@ -29,6 +29,7 @@
 
 
 ==================================================================================
+<br><br/>
 
 
 
@@ -59,7 +60,7 @@
 ##### 5、重定向
 [Android WebView 性能优化](https://zhaoshuming.github.io/2019/09/26/android-webview/)
 
-  
+<br><br/>  
 ##### 1.1、Android自带的缓存机制有5种： 
 ##### （1）浏览器缓存机制
 ##### （2）Application Cache缓存机制
@@ -107,7 +108,7 @@
 
 
 
-  
+<br><br/>
 ##### 1.2、缓存模式：即告诉Android WebView 什么时候去读缓存，以哪种方式去读缓存 
 ##### Android WebView 自带的缓存模式有4种：
 ##### （1）LOAD_CACHE_ONLY： 只使用缓存； 
@@ -119,7 +120,7 @@
 
 
 
-  
+<br><br/>  
 ##### 2.1、资源预加载：提早加载将需使用的H5页面，即 提前构建缓存
 ##### 2.1.1、预加载WebView对象
 ![avatar](https://upload-images.jianshu.io/upload_images/944365-c14d7fef491bb587.png)
@@ -136,7 +137,7 @@
   
   
   
-  
+<br><br/>
 #### WebView加载内容的几种方式：
 ##### 1、加载assets目录下的本地网页，如：
 ##### mWebView.loadUrl("file:///android_asset/html/test1.html");
@@ -145,7 +146,7 @@
 ##### 3、使用loadData或loadDataWithBaseURL方法加载内容（主要用于加载html片段，而不是一个完整的网页），如：
 ##### mWebView.loadDataWithBaseURL(null, "<span style=\"\">网页加载失败</span>", "text/html", "utf-8", null);
   
-  
+<br><br/>
 #### WebView的UserAgent：
 ##### 用户代理，是Http协议的一部分，属于头域的组成部分，简称为UA。
 ##### 是一种向访问网站提供你所使用的浏览器类型及版本、操作系统及版本、浏览器内核等信息标识。
@@ -160,7 +161,7 @@
 ''  
 
 
-
+<br><br/>
 #### WebView重定向需要考虑的case：
 ##### 1、是最普通的http url【不含.doc .apk等下载url】
 ##### 2、下载的http url【如.doc .apk等】
@@ -168,6 +169,7 @@
 #####【deprecated】如果期望打开web页时不自动唤起app，可通过 request.hasGesture()【是否】点击来判断，如果是true才唤起第三方app。（此种方案有时不太准确，故可采用下面方案）
 #####【recommend】定义一个boolean值如:isClickWeb = false,在onTouchEvent DOWN方法中，将其赋值为true。在必要位置添加判断即可【具体可参考代码】
   
+<br><br/>  
 #### Android打开office文档的方案如下：
 ##### 1、调用第三方的office软件，缺点--不安全。
 ##### 2、自己解析office文件并自定义控件显示，缺点--工作量非常庞大
@@ -175,7 +177,7 @@
 ##### 4、使用第三方的在线预览工具，缺点--不安全
 ##### 参考[Android打开doc、xlsx、ppt等office文档解决方案](https://blog.csdn.net/u011791526/article/details/73088768) 
 
-
+<br><br/>
 #### Android WebView播放音乐属性：
 #####  //是否支持播放音乐
 #####  ws.setPluginState(WebSettings.PluginState.ON);
@@ -184,11 +186,12 @@
 #####  //是否需要用户点击才播放
 #####  ws.setMediaPlaybackRequiresUserGesture(true);
 
+<br><br/>
 #### WebView加载某些url(如网易云音乐)是出现错误的问题【ERR_NAME_NOT_RESOLVED】：
 ##### 在onReceivedError中判断，request.isForMainFrame() 为true，则再进行相关错误页的加载。
 ##### 使用url.equals(getUrl())可以达到相同的效果。
 
-
+<br><br/>
 #### HTTP常见状态码:
 ##### 1开头：临时响应
 ##### 2开头：成功
@@ -197,7 +200,7 @@
 ##### 5开头：服务器错误
 ##### [HTTP常见状态码 200 301 302 404 500](https://www.cnblogs.com/starof/p/5035119.html)
 
-
+<br><br/>
 #### 禁止WebView滚动事件的方法：
 ##### 1、通过设置网页的高度为所需要内容的高度.【前端修改】
 ##### 2、onScrollChanged 方法中添加 scrollTo(0, 0)
@@ -205,7 +208,7 @@
 ##### 4、overScrollBy 中返回false
 ##### 5、如果ScrollView包裹WebView，那么可以设置webView.setScrollContainer(false) 【慎用---初步验证无效】
 
-
+<br><br/>
 #### url富文本预览【富链接预览】功能：
 ##### 可用Android-Link-Preview开源库，原理是使用Jsoup爬虫解析。
 ##### GitHub：[Android-Link-Preview](https://github.com/LeonardoCardoso/Android-Link-Preview)  
