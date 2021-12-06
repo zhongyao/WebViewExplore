@@ -20,7 +20,9 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
+import android.webkit.ConsoleMessage;
 import android.webkit.DownloadListener;
+import android.webkit.JsResult;
 import android.webkit.PermissionRequest;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -49,7 +51,7 @@ public class StableWebView extends WebView {
     private static IWebTitleCallBack webTitleCallBack;
     private boolean isScrolling = false;
     private boolean scroll_disabled = false;
-    private static Context context;
+    private Context context;
     /**
      * 此属性用于解决--首次进入三方页面时，页面会自动跳转的问题。
      */
@@ -97,7 +99,13 @@ public class StableWebView extends WebView {
         //是否需要用户点击才播放
         ws.setMediaPlaybackRequiresUserGesture(true);
 
+        /**
+         * WebChromeClient是辅助WebView处理Javascript的对话框，网站图标，网站title，加载进度等
+         */
         setWebChromeClient(new XWebChromeClient());
+        /**
+         * WebViewClient就是帮助WebView处理各种通知、请求事件的
+         */
         setWebViewClient(new XWebViewClient());
 
         setDownloadListener(new XDownloadListener());
@@ -107,7 +115,7 @@ public class StableWebView extends WebView {
     }
 
 
-        //禁止WebView滑动【方法3】
+    //禁止WebView滑动【方法3】
 //    @Override
 //    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
 //        return !scroll_disabled && super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
@@ -189,6 +197,12 @@ public class StableWebView extends WebView {
             return shouldOverride(view, url);
         }
 
+        /**
+         * 重定向处理方法
+         * @param view
+         * @param url
+         * @return
+         */
         private boolean shouldOverride(WebView view, final String url) {
             //业务需要可做处理
             redirectionJudge(view, url);
@@ -422,6 +436,11 @@ public class StableWebView extends WebView {
 
     public static class XWebChromeClient extends WebChromeClient {
 
+        /**
+         * 获取网页加载进度
+         * @param view
+         * @param newProgress
+         */
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
@@ -429,12 +448,11 @@ public class StableWebView extends WebView {
         }
 
         /**
-         * Android 6.0 以下通过title获取【捕捉HTTP ERROR】
+         * 获取网站标题 (Android 6.0 以下通过title获取【捕捉HTTP ERROR】)
          *
          * @param view
          * @param title
          */
-        //Android6.0以下
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
@@ -449,6 +467,60 @@ public class StableWebView extends WebView {
                     // showErrorPage();
                 }
             }
+        }
+
+        /**
+         * 网站图标
+         *
+         * @param view
+         * @param icon
+         */
+        @Override
+        public void onReceivedIcon(WebView view, Bitmap icon) {
+            super.onReceivedIcon(view, icon);
+            Log.d(TAG, "icon:" + icon);
+        }
+
+        /**
+         * 拦截Alert弹框
+         *
+         * @param view
+         * @param url
+         * @param message
+         * @param result
+         * @return
+         */
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+            Log.d(TAG, "onJsAlert");
+            return super.onJsAlert(view, url, message, result);
+        }
+
+        /**
+         * 拦截 confirm弹框
+         *
+         * @param view
+         * @param url
+         * @param message
+         * @param result
+         * @return
+         */
+        @Override
+        public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+            Log.d(TAG, "onJsConfirm");
+            return super.onJsConfirm(view, url, message, result);
+        }
+
+        /**
+         * 打印console信息
+         *
+         * @param consoleMessage
+         * @return
+         */
+        @Override
+        public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+            Log.d(TAG, "onConsoleMessage");
+            return super.onConsoleMessage(consoleMessage);
         }
 
         /**
@@ -519,7 +591,7 @@ public class StableWebView extends WebView {
         super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
     }
 
-    private static void jumpTo3rdBrowserView(String url) {
+    private void jumpTo3rdBrowserView(String url) {
         Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
         //预览doc文件/预览图片
