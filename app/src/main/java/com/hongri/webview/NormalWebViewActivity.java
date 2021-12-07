@@ -11,11 +11,11 @@ import com.hongri.webview.util.SchemeUtil;
 
 /**
  * Create by zhongyao on 2021/7/30
- * Description: WebView预览doc等方案汇总
+ * Description: WebView通用预览方案举例
  * <p>
  * 参考：https://blog.csdn.net/u011791526/article/details/73088768
  */
-public class DocWebViewActivity extends FragmentActivity {
+public class NormalWebViewActivity extends FragmentActivity {
 //    private static final String URL = "https://www.baidu.com";
     private static final String URL = "https://m.sohu.com/a/495754815_429139?scm=0.0.0.0&spm=smwp.home.d-news2.1.1634547608038lKriPMh&_trans_=000012_uc_km";
 //    private static final String URL = "https://zao.place.fun/doc/reportguide";

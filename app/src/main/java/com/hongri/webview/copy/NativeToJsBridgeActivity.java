@@ -14,7 +14,10 @@ import android.webkit.WebView;
 import android.widget.Button;
 import com.hongri.webview.R;
 import com.hongri.webview.copy.util.Logger;
-
+/**
+ * @author hongri
+ * @description Native调用JS方法举例
+ */
 public class NativeToJsBridgeActivity extends Activity implements View.OnClickListener {
 
     private WebView webView;

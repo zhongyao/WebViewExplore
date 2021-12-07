@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
-import com.hongri.webview.copy.APIWebViewActivity;
+import com.hongri.webview.copy.JsToNativeBridgeActivity;
 import com.hongri.webview.copy.MainActivity;
 import com.hongri.webview.copy.NativeToJsBridgeActivity;
 import com.hongri.webview.copy.SelectionWebViewActivity;
@@ -56,7 +56,7 @@ public class HomeActivity extends FragmentActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
             case R.id.btn3:
-                intent = new Intent(HomeActivity.this, APIWebViewActivity.class);
+                intent = new Intent(HomeActivity.this, JsToNativeBridgeActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btnJS:
@@ -68,7 +68,7 @@ public class HomeActivity extends FragmentActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
             case R.id.btn5:
-                intent = new Intent(HomeActivity.this, DocWebViewActivity.class);
+                intent = new Intent(HomeActivity.this, NormalWebViewActivity.class);
                 startActivity(intent);
                 break;
             default:

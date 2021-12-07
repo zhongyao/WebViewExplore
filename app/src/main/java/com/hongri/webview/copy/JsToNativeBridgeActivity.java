@@ -26,12 +26,11 @@ import com.hongri.webview.copy.util.ToastUtil;
 
 /**
  * @author hongri
- *
- * JS交互类
+ * @description JS调用Native方法举例
  */
-public class APIWebViewActivity extends Activity {
+public class JsToNativeBridgeActivity extends Activity {
 
-    private final String TAG = APIWebViewActivity.class.getSimpleName();
+    private final String TAG = JsToNativeBridgeActivity.class.getSimpleName();
     private WebView mWebView;
 
     @Override
@@ -265,7 +264,7 @@ public class APIWebViewActivity extends Activity {
          */
         @JavascriptInterface
         public void callback(String msg) {
-            ToastUtil.showToast(APIWebViewActivity.this, "JS方法回调到web了 ：" + msg);
+            ToastUtil.showToast(JsToNativeBridgeActivity.this, "JS方法回调到web了 ：" + msg);
         }
     }
 
@@ -284,7 +283,7 @@ public class APIWebViewActivity extends Activity {
         Uri uri = Uri.parse(url);
         if (uri.getScheme().equals("js")) {
             if (uri.getAuthority().equals("Authority")) {
-                ToastUtil.showToast(APIWebViewActivity.this, "方法2");
+                ToastUtil.showToast(JsToNativeBridgeActivity.this, "方法2");
             }
             return true;
         }
@@ -301,7 +300,7 @@ public class APIWebViewActivity extends Activity {
         Uri uri = Uri.parse(message);
         if (uri.getScheme().equals("js")) {
             if (uri.getAuthority().equals("Authority")) {
-                ToastUtil.showToast(APIWebViewActivity.this, "方法3");
+                ToastUtil.showToast(JsToNativeBridgeActivity.this, "方法3");
             }
             return true;
         }
