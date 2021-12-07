@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         tools:targetApi="m">
-        <activity android:name=".cache.WebViewCacheActivity">
+        <activity android:name=".WebViewCacheActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
-        <activity android:name=".copy.NativeToJsBridgeActivity"></activity>
+        <activity android:name=".NativeToJsBridgeActivity"></activity>
         <activity android:name=".NormalWebViewActivity"
             android:theme="@style/Theme.AppCompat">
             <!--<intent-filter>
@@ -37,10 +37,10 @@
             </intent-filter>-->
         </activity>
 
-        <activity android:name=".headanim.ArticleHeadAnimActivity"></activity>
-        <activity android:name=".copy.MainActivity"></activity>
-        <activity android:name=".copy.JsToNativeBridgeActivity"></activity>
-        <activity android:name=".copy.SelectionWebViewActivity"></activity>
+        <activity android:name=".WebViewScrollActivity"></activity>
+        <activity android:name=".SysSelectionBoxWebViewActivity"></activity>
+        <activity android:name=".JsToNativeBridgeActivity"></activity>
+        <activity android:name=".SelectionBoxWebViewActivity"></activity>
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,21 +1,25 @@
-package com.hongri.webview.headanim;
+package com.hongri.webview;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.hongri.webview.R;
+
 import com.hongri.webview.copy.util.GlobalConstant;
 import com.hongri.webview.copy.util.Logger;
+import com.hongri.webview.headanim.OnScrollChangedCallback;
 import com.hongri.webview.headanim.widget.HeadAnimWebView;
 
-public class ArticleHeadAnimActivity extends Activity implements OnScrollChangedCallback {
+/**
+ * @author hongri
+ * @description 监听WebView滑动的Activity
+ */
+public class WebViewScrollActivity extends Activity implements OnScrollChangedCallback {
 
-    private static final String TAG = ArticleHeadAnimActivity.class.getSimpleName();
+    private static final String TAG = WebViewScrollActivity.class.getSimpleName();
     private LinearLayout headLayout;
     private TextView headTitle;
     private HeadAnimWebView webView;

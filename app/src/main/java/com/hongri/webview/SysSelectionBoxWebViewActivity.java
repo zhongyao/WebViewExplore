@@ -1,4 +1,4 @@
-package com.hongri.webview.copy;
+package com.hongri.webview;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -14,7 +14,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import com.hongri.webview.R;
+
+import com.hongri.webview.copy.ActionSelectListener;
 import com.hongri.webview.copy.util.BitmapUtil;
 import com.hongri.webview.copy.util.GlobalConstant;
 import com.hongri.webview.copy.util.Logger;
@@ -28,9 +29,9 @@ import com.hongri.webview.copy.widget.TextImageLayout;
  * @author hongri
  * @description 使用系统自有的工具框实现
  */
-public class MainActivity extends Activity implements ActionSelectListener {
+public class SysSelectionBoxWebViewActivity extends Activity implements ActionSelectListener {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = SysSelectionBoxWebViewActivity.class.getSimpleName();
     private ActionWebView mActionWebView;
     private TextImageLayout layout;
     //private TextImageView iv;
@@ -131,11 +132,11 @@ public class MainActivity extends Activity implements ActionSelectListener {
     public void onClick(String title, final String selectText) {
         Logger.d(TAG, "currentThread:" + Thread.currentThread());
         if (GlobalConstant.ENLARGE.equals(title)) {
-            ToastUtil.showToast(MainActivity.this, "扩选");
+            ToastUtil.showToast(SysSelectionBoxWebViewActivity.this, "扩选");
         } else if (GlobalConstant.COPY.equals(title)) {
-            ToastUtil.showToast(MainActivity.this, "复制文本：\n" + selectText);
+            ToastUtil.showToast(SysSelectionBoxWebViewActivity.this, "复制文本：\n" + selectText);
         } else if (GlobalConstant.SHARE.equals(title)) {
-            ToastUtil.showToast(MainActivity.this, "分享");
+            ToastUtil.showToast(SysSelectionBoxWebViewActivity.this, "分享");
             layout.setVisibility(View.VISIBLE);
             tv.setVisibility(View.VISIBLE);
             tv.setText(selectText);
@@ -146,7 +147,7 @@ public class MainActivity extends Activity implements ActionSelectListener {
             //iv.invalidate();
 
         } else {
-            ToastUtil.showToast(MainActivity.this, "无此选项...");
+            ToastUtil.showToast(SysSelectionBoxWebViewActivity.this, "无此选项...");
         }
         Logger.d(TAG, "onClick---" + "title:" + title + " selectText:" + selectText);
     }

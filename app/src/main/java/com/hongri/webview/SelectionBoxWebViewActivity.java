@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.hongri.webview.copy;
+package com.hongri.webview;
 
 import android.app.Activity;
 import android.os.Bundle;
+
 import com.hongri.webview.R;
 import com.hongri.webview.copy.drag.PopItemClickListener;
 import com.hongri.webview.copy.widget.ScanImage;
@@ -26,8 +27,10 @@ import com.hongri.webview.copy.widget.TextImageLayout;
 
 /**
  * @author hongri
+ * @description 自定义WebView文字选择框Activity
+ * 【含扩选、复制、分享】
  */
-public class SelectionWebViewActivity extends Activity implements PopItemClickListener {
+public class SelectionBoxWebViewActivity extends Activity implements PopItemClickListener {
 
     private TextImageLayout layout;
     private SelectedTextView tv;

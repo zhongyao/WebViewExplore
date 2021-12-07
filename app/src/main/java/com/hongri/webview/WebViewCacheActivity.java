@@ -1,4 +1,4 @@
-package com.hongri.webview.cache;
+package com.hongri.webview;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,18 +8,16 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import com.hongri.webview.R;
 
 /**
  * @author hongri
- * WebView缓存机制
+ * @description WebView缓存机制
  */
 public class WebViewCacheActivity extends Activity {
 
@@ -126,7 +124,7 @@ public class WebViewCacheActivity extends Activity {
                     }
                     // 步骤4:替换资源
                     WebResourceResponse response = new WebResourceResponse("image/png",
-                        "utf-8", is);
+                            "utf-8", is);
                     // 参数1：http请求里该图片的Content-Type,此处图片为image/png
                     // 参数2：编码类型
                     // 参数3：存放着替换资源的输入流（上面创建的那个）

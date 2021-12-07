@@ -1,4 +1,4 @@
-package com.hongri.webview.copy;
+package com.hongri.webview;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,8 +12,9 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
-import com.hongri.webview.R;
+
 import com.hongri.webview.copy.util.Logger;
+
 /**
  * @author hongri
  * @description Native调用JS方法举例

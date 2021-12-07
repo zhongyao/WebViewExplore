@@ -11,8 +11,8 @@ import com.hongri.webview.util.Constants;
 import com.hongri.webview.util.SchemeUtil;
 
 /**
- * Create by zhongyao on 2021/7/30
- * Description: WebView通用预览方案举例
+ * @author hongri
+ * @description WebView通用预览方案举例
  * 参考：https://blog.csdn.net/u011791526/article/details/73088768
  */
 public class NormalWebViewActivity extends FragmentActivity {

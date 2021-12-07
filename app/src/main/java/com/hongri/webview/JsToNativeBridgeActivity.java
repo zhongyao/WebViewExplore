@@ -1,4 +1,4 @@
-package com.hongri.webview.copy;
+package com.hongri.webview;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -19,7 +19,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import com.hongri.webview.R;
+
 import com.hongri.webview.copy.util.GlobalConstant;
 import com.hongri.webview.copy.util.Logger;
 import com.hongri.webview.copy.util.ToastUtil;
@@ -250,17 +250,16 @@ public class JsToNativeBridgeActivity extends Activity {
 
     /**
      * JS调用android原生方法1：
-     *
+     * <p>
      * 通过WebView的addJavascriptInterface()进行对象映射
      */
     private class JsCallAndroidInterface {
 
         /**
-         *@JavascriptInterface注解方法.
-         * js端调用，4.2以后安全;4.2以前，当JS拿到Android这个对象后，
+         * @param msg
+         * @JavascriptInterface注解方法. js端调用，4.2以后安全;4.2以前，当JS拿到Android这个对象后，
          * 就可以调用这个Android对象中所有的方法，包括系统类（java.lang.Runtime 类）
          * 从而进行任意代码执行。
-         * @param msg
          */
         @JavascriptInterface
         public void callback(String msg) {
@@ -270,9 +269,9 @@ public class JsToNativeBridgeActivity extends Activity {
 
     /**
      * JS调用android原生方法2：
-     *
+     * <p>
      * 通过WebViewClient shouldOverrideUrlLoading方法回调拦截url
-     *
+     * <p>
      * 根据协议的参数，判断是否是所需要的url：
      * 一般根据scheme(协议格式),authority（协议名)来判读
      *
@@ -292,7 +291,7 @@ public class JsToNativeBridgeActivity extends Activity {
 
     /**
      * JS调用android原生方法3：
-     *
+     * <p>
      * 通过WebChromeClient的 onJsAlert() onJsConfirm() onJsPrompt() 方法
      * 回调拦截JS对话框alert() confirm() prompt()
      */
@@ -315,7 +314,7 @@ public class JsToNativeBridgeActivity extends Activity {
         if (mWebView != null) {
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             mWebView.clearHistory();
-            ((ViewGroup)mWebView.getParent()).removeView(mWebView);
+            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
             mWebView.destroy();
             mWebView = null;
         }
