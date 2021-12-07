@@ -1,16 +1,12 @@
 package com.hongri.webview;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 
 import com.hongri.webview.copy.widget.StableWebView;
-import com.hongri.webview.fragment.IDialogListener;
-import com.hongri.webview.fragment.OpenAppFragment;
 import com.hongri.webview.util.SchemeUtil;
 
 /**

@@ -43,7 +43,7 @@ import java.util.Map;
 
 /**
  * Create by hongri on 2021/7/30
- * Description: WebView自定义组件
+ * Description:基础通用 StableWebView 组件
  */
 public class StableWebView extends WebView {
 
