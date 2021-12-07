@@ -1,21 +1,21 @@
-package com.hongri.webview.headanim.widget;
+package com.hongri.webview.scroll.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 import com.hongri.webview.copy.util.Logger;
-import com.hongri.webview.headanim.OnScrollChangedCallback;
+import com.hongri.webview.scroll.OnScrollChangedCallback;
 
 /**
  * Created by zhongyao on 2019-05-07.
  */
-public class HeadAnimWebView extends WebView {
+public class ScrollWebView extends WebView {
 
-    private static final String TAG = HeadAnimWebView.class.getSimpleName();
+    private static final String TAG = ScrollWebView.class.getSimpleName();
 
     private OnScrollChangedCallback mOnScrollChangedCallback;
 
-    public HeadAnimWebView(Context context, AttributeSet attrs) {
+    public ScrollWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

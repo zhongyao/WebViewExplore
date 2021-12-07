@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.hongri.webview.copy.util.GlobalConstant;
 import com.hongri.webview.copy.util.Logger;
-import com.hongri.webview.headanim.OnScrollChangedCallback;
-import com.hongri.webview.headanim.widget.HeadAnimWebView;
+import com.hongri.webview.scroll.OnScrollChangedCallback;
+import com.hongri.webview.scroll.widget.ScrollWebView;
 
 /**
  * @author hongri
@@ -22,7 +22,7 @@ public class WebViewScrollActivity extends Activity implements OnScrollChangedCa
     private static final String TAG = WebViewScrollActivity.class.getSimpleName();
     private LinearLayout headLayout;
     private TextView headTitle;
-    private HeadAnimWebView webView;
+    private ScrollWebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

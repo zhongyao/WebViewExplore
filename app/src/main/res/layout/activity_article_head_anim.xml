@@ -26,7 +26,7 @@
     </LinearLayout>
 
 
-    <com.hongri.webview.headanim.widget.HeadAnimWebView
+    <com.hongri.webview.scroll.widget.ScrollWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
