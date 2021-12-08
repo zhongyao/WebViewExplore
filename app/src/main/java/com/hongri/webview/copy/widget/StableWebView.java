@@ -16,7 +16,10 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
@@ -33,6 +36,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.hongri.webview.copy.util.Logger;
 import com.hongri.webview.fragment.IDialogListener;
 import com.hongri.webview.fragment.OpenAppFragment;
 import com.hongri.webview.util.SchemeUtil;
@@ -199,6 +203,7 @@ public class StableWebView extends WebView {
 
         /**
          * 重定向处理方法
+         *
          * @param view
          * @param url
          * @return
@@ -438,6 +443,7 @@ public class StableWebView extends WebView {
 
         /**
          * 获取网页加载进度
+         *
          * @param view
          * @param newProgress
          */
@@ -533,6 +539,39 @@ public class StableWebView extends WebView {
             super.onPermissionRequest(request);
             Log.d(TAG, "onPermissionRequest---> request:" + request);
         }
+    }
+
+    /**
+     * 长按弹出ActionMode菜单样式
+     *
+     * @param callback
+     * @param type
+     * @return
+     */
+    @Override
+    public ActionMode startActionMode(ActionMode.Callback callback, int type) {
+        Logger.d(TAG, "startActionMode--callback:" + callback + " type:" + type);
+        ActionMode actionMode = super.startActionMode(callback, type);
+        return resolveActionMode(actionMode);
+    }
+
+
+    private ActionMode resolveActionMode(ActionMode actionMode) {
+        if (actionMode != null) {
+            final Menu menu = actionMode.getMenu();
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem menuItem = menu.getItem(i);
+                //监听系统自带选择框的item点击事件
+                menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Log.d(TAG, item.getTitle().toString());
+                        return true;
+                    }
+                });
+            }
+        }
+        return actionMode;
     }
 
     public void setScrollDisabled(boolean scroll_disabled) {

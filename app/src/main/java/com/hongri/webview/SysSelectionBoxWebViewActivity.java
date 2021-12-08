@@ -1,5 +1,6 @@
 package com.hongri.webview;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build.VERSION;
@@ -27,7 +28,8 @@ import com.hongri.webview.copy.widget.TextImageLayout;
 
 /**
  * @author hongri
- * @description 使用系统自有的工具框实现
+ * @description 自定义WebView文本复制框
+ * 【主要使用WebView的 startActionMode 具体实现】
  */
 public class SysSelectionBoxWebViewActivity extends Activity implements ActionSelectListener {
 
@@ -68,6 +70,7 @@ public class SysSelectionBoxWebViewActivity extends Activity implements ActionSe
         });
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
         mActionWebView = findViewById(R.id.webView);
         mActionWebView.setActionSelectListener(this);
@@ -86,7 +89,7 @@ public class SysSelectionBoxWebViewActivity extends Activity implements ActionSe
     /**
      * WebViewClient主要帮助WebView处理各种通知、请求事件（处理html的页面内容）
      */
-    private class ActionWebViewClient extends WebViewClient {
+    private static class ActionWebViewClient extends WebViewClient {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -119,7 +122,7 @@ public class SysSelectionBoxWebViewActivity extends Activity implements ActionSe
     /**
      * WebChromeClient主要辅助WebView处理JS的对话框、网站图标、加载进度等。
      */
-    private class ActionWebChromeClient extends WebChromeClient {
+    private static class ActionWebChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
