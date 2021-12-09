@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.hongri.webview.copy.widget.StableWebView;
 import com.hongri.webview.util.Constants;
@@ -63,6 +65,18 @@ public class NormalWebViewActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         if (mWebView != null) {
+            mWebView.destroy();
+
+            ViewParent parent = mWebView.getParent();
+            if (parent != null) {
+                ((ViewGroup) parent).removeView(mWebView);
+            }
+            mWebView.stopLoading();
+            // 退出时调用此方法，移除绑定的服务，否则某些特定系统会报错
+            mWebView.getSettings().setJavaScriptEnabled(false);
+            mWebView.clearHistory();
+            mWebView.clearView();
+            mWebView.removeAllViews();
             mWebView.destroy();
         }
         super.onDestroy();
