@@ -16,16 +16,16 @@ import com.hongri.webview.util.SchemeUtil;
  * 参考：https://blog.csdn.net/u011791526/article/details/73088768
  */
 public class NormalWebViewActivity extends FragmentActivity {
-    private StableWebView stableWebView;
+    private StableWebView mWebView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc);
 
-        stableWebView = findViewById(R.id.stableWebView);
+        mWebView = findViewById(R.id.stableWebView);
         if (!SchemeUtil.isImageFile(Constants.URL)) {
-            stableWebView.loadUrl(Constants.URL);
+            mWebView.loadUrl(Constants.URL);
         } else {
             initBrowserView();
         }
@@ -47,24 +47,24 @@ public class NormalWebViewActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (stableWebView != null) {
-            stableWebView.onResume();
+        if (mWebView != null) {
+            mWebView.onResume();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (stableWebView != null) {
-            stableWebView.onPause();
+        if (mWebView != null) {
+            mWebView.onPause();
         }
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if (stableWebView != null) {
-            stableWebView.destroy();
+        if (mWebView != null) {
+            mWebView.destroy();
         }
+        super.onDestroy();
     }
 }
