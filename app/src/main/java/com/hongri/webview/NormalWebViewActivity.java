@@ -1,5 +1,6 @@
 package com.hongri.webview;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +20,6 @@ import com.hongri.webview.util.SchemeUtil;
  */
 public class NormalWebViewActivity extends FragmentActivity {
     private StableWebView mWebView;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +65,7 @@ public class NormalWebViewActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         if (mWebView != null) {
-            mWebView.destroy();
-
+            // 如果先调用destroy()方法，则会命中if (isDestroyed()) return;这一行代码，需要先onDetachedFromWindow()，再destroy().
             ViewParent parent = mWebView.getParent();
             if (parent != null) {
                 ((ViewGroup) parent).removeView(mWebView);
