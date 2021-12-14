@@ -4,13 +4,15 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.widget.Toast;
 
 import com.hongri.webview.CalculateInterface;
 
 /**
  * @author hongri
+ * @description 远程Service【Server】
  */
-public class CalculateService extends Service {
+public class RemoteService extends Service {
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -44,6 +46,11 @@ public class CalculateService extends Service {
         public double doCalculate(double a, double b) throws RemoteException {
             Calculate calculate = new Calculate();
             return calculate.calculateSum(a, b);
+        }
+
+        @Override
+        public void showToast() throws RemoteException {
+            Toast.makeText(getBaseContext(), "showToast", Toast.LENGTH_LONG).show();
         }
     };
 }

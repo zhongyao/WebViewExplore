@@ -40,10 +40,17 @@
             dj.post("showToast", {message: JSON.stringify(res)});
         });
     }
+
+    function callCalculate() {
+        dj.postWithCallback("appCalculate", {firstNum: "1", secondNum: "2"}, function(res) {
+            dj.post("showToast", {message: JSON.stringify(res)});
+        });
+    }
 </script>
 <div class="item" style="font-size: 20px; color: #ffffff" onclick="callAppToast()">调用: showToast</div>
 <div class="item" style="font-size: 20px; color: #ffffff" onclick="callAppDialog()">调用: showDialog</div>
 <div class="item" style="font-size: 20px; color: #ffffff" onclick="callAppDataProvider()">调用: appDataProvider</div>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="callCalculate()">调用: appCalculate</div>
 <script src="js/dj.js" charset="utf-8"></script>
 </body>
 </html>

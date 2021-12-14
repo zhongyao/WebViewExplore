@@ -37,7 +37,7 @@
         </activity>
 
         <service
-            android:name=".service.CalculateService"
+            android:name=".service.RemoteService"
             android:enabled="true"
             android:exported="true" />
     </application>

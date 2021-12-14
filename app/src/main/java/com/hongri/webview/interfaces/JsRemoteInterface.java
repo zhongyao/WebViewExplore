@@ -1,6 +1,7 @@
 package com.hongri.webview.interfaces;
 
 import android.os.Handler;
+import android.os.RemoteException;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
@@ -23,7 +24,11 @@ public class JsRemoteInterface {
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.post(cmd, param);
+                    try {
+                        listener.post(cmd, param);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

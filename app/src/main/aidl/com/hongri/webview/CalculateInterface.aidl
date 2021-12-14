@@ -5,4 +5,5 @@ package com.hongri.webview;
 
 interface CalculateInterface {
    double doCalculate(double a, double b);
+   void showToast();
 }
