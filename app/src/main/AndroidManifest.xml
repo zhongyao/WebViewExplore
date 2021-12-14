@@ -13,12 +13,17 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".WebViewCacheActivity"></activity>
-        <activity android:name=".copy.jsbridge.JsBridgeActivity"></activity>
+        <!--独立进程Activity-->
+        <activity
+            android:name=".SingleProcessActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:process=":remoteWeb" />
+        <activity android:name=".WebViewCacheActivity" />
+        <activity android:name=".copy.jsbridge.JsBridgeActivity" />
         <activity android:name=".NativeToJsBridgeActivity" />
         <activity
             android:name=".NormalWebViewActivity"
-            android:theme="@style/Theme.AppCompat"></activity>
+            android:theme="@style/Theme.AppCompat" />
         <activity android:name=".WebViewScrollActivity" />
         <activity android:name=".SysSelectionBoxWebViewActivity" />
         <activity android:name=".JsToNativeBridgeActivity" />

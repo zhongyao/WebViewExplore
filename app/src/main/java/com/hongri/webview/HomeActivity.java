@@ -17,6 +17,7 @@ import android.widget.Button;
 public class HomeActivity extends FragmentActivity implements View.OnClickListener {
 
     private Button btn1, btn2, btn3, btnJS, btn4, btn5;
+    private Button btn_single_process;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class HomeActivity extends FragmentActivity implements View.OnClickListen
         btnJS = findViewById(R.id.btnJS);
         btn4 = findViewById(R.id.btn4);
         btn5 = findViewById(R.id.btn5);
+        btn_single_process = findViewById(R.id.btn_single_process);
 
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
@@ -36,6 +38,7 @@ public class HomeActivity extends FragmentActivity implements View.OnClickListen
         btnJS.setOnClickListener(this);
         btn4.setOnClickListener(this);
         btn5.setOnClickListener(this);
+        btn_single_process.setOnClickListener(this);
     }
 
     @Override
@@ -64,6 +67,11 @@ public class HomeActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.btn5:
                 intent = new Intent(HomeActivity.this, NormalWebViewActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.btn_single_process:
+                intent = new Intent(HomeActivity.this, SingleProcessActivity.class);
                 startActivity(intent);
                 break;
             default:
