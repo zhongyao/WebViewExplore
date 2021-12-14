@@ -46,6 +46,12 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
         if (mWebView != null) {
             mWebView.onResume();
         }
+
+        initService();
+    }
+
+    private void initService() {
+
     }
 
     @Override
