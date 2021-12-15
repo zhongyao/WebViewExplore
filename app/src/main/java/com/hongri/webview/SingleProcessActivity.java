@@ -27,7 +27,7 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
 
     private static final String TAG = "SingleProcessActivity";
     private StableWebView mWebView;
-    public static final String CONTENT_SCHEME = "file:///android_asset/aidl.html";
+    public static final String CONTENT_SCHEME = "file:///android_asset/remote/remote_web.html";
     private CalculateInterface mRemoteService;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -84,10 +84,10 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (mWebView != null) {
             mWebView.destroy();
         }
-        super.onDestroy();
     }
 
     @Override
@@ -105,12 +105,6 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
             case "showToast":
                 Log.d(TAG, "showToast");
                 mRemoteService.showToast();
-                break;
-            case "showDialog":
-                Log.d(TAG, "showDialog");
-                break;
-            case "appDataProvider":
-                Log.d(TAG, "appDataProvider");
                 break;
             case "appCalculate":
                 Log.d(TAG, "appCalculate --> " + param);

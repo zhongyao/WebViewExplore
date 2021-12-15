@@ -2,11 +2,7 @@ package com.hongri.webview.interfaces;
 
 import android.os.Handler;
 import android.os.RemoteException;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
-
-import com.hongri.webview.SingleProcessActivity;
-import com.hongri.webview.util.ProcessUtil;
 
 /**
  * Create by zhongyao on 2021/12/14

@@ -280,7 +280,7 @@ public class JsToNativeBridgeActivity extends Activity {
      */
     private boolean resolveShouldLoadLogic(String url) {
         Uri uri = Uri.parse(url);
-        if (uri.getScheme().equals("js")) {
+        if (uri.getScheme().equals("remote")) {
             if (uri.getAuthority().equals("Authority")) {
                 ToastUtil.showToast(JsToNativeBridgeActivity.this, "方法2");
             }
@@ -297,7 +297,7 @@ public class JsToNativeBridgeActivity extends Activity {
      */
     private boolean resolveJSPrompt(String message) {
         Uri uri = Uri.parse(message);
-        if (uri.getScheme().equals("js")) {
+        if (uri.getScheme().equals("remote")) {
             if (uri.getAuthority().equals("Authority")) {
                 ToastUtil.showToast(JsToNativeBridgeActivity.this, "方法3");
             }
