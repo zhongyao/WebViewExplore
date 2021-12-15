@@ -6,7 +6,7 @@ import android.webkit.JavascriptInterface;
 
 /**
  * Create by zhongyao on 2021/12/14
- * Description:
+ * Description: 前端交互映射类
  */
 public class JsRemoteInterface {
 

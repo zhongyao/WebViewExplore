@@ -39,7 +39,7 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
         setContentView(R.layout.activity_single_process);
         mWebView = findViewById(R.id.stableWebView);
         WebSettings webSettings = mWebView.getSettings();
-        //运行js交互
+        //允许js交互
         webSettings.setJavaScriptEnabled(true);
         JsRemoteInterface remoteInterface = new JsRemoteInterface();
         remoteInterface.setListener(this);
