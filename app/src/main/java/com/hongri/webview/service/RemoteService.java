@@ -15,6 +15,7 @@ import com.hongri.webview.util.ProcessUtil;
 /**
  * @author hongri
  * @description 远程Service【Server】
+ * 【此Service位于主进程中】
  */
 public class RemoteService extends Service {
 

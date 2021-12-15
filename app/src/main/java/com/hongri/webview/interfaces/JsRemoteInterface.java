@@ -14,6 +14,11 @@ public class JsRemoteInterface {
     private final Handler mHandler = new Handler();
     private IRemoteListener listener;
 
+    /**
+     * 前端调用方法
+     * @param cmd
+     * @param param
+     */
     @JavascriptInterface
     public void post(final String cmd, final String param) {
         mHandler.post(new Runnable() {

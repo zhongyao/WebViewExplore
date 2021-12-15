@@ -22,6 +22,8 @@ import org.json.JSONObject;
 /**
  * @author hongri
  * @description WebView独立进程解决方案 举例
+ *
+ * 【此Activity位于独立进程remoteWeb中】
  */
 public class SingleProcessActivity extends FragmentActivity implements IRemoteListener {
 
@@ -37,9 +39,11 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
         setContentView(R.layout.activity_single_process);
         mWebView = findViewById(R.id.stableWebView);
         WebSettings webSettings = mWebView.getSettings();
+        //运行js交互
         webSettings.setJavaScriptEnabled(true);
         JsRemoteInterface remoteInterface = new JsRemoteInterface();
         remoteInterface.setListener(this);
+        //注册JS交互接口
         mWebView.addJavascriptInterface(remoteInterface, "webview");
         mWebView.loadUrl(CONTENT_SCHEME);
     }
@@ -54,6 +58,9 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
         initService();
     }
 
+    /**
+     * 绑定远程服务RemoteService
+     */
     private void initService() {
         Intent intent = new Intent();
         intent.setComponent(new ComponentName("com.hongri.webview", "com.hongri.webview.service.RemoteService"));
@@ -64,6 +71,7 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "onServiceConnected");
+            //当Service绑定成功时，通过Binder获取到远程服务代理
             mRemoteService = CalculateInterface.Stub.asInterface(service);
         }
 
@@ -79,6 +87,9 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
         super.onPause();
         if (mWebView != null) {
             mWebView.onPause();
+        }
+        if (mConn != null) {
+            unbindService(mConn);
         }
     }
 
@@ -96,9 +107,16 @@ public class SingleProcessActivity extends FragmentActivity implements IRemoteLi
         dealWithPost(cmd, param);
     }
 
+    /**
+     * 前端调用方法处理
+     *
+     * @param cmd
+     * @param param
+     * @throws RemoteException
+     */
     private void dealWithPost(String cmd, String param) throws RemoteException {
         if (mRemoteService == null) {
-            Log.e(TAG, "remote service is null");
+            Log.e(TAG, "remote service proxy is null");
             return;
         }
         switch (cmd) {
