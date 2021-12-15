@@ -46,31 +46,51 @@ public class HomeActivity extends FragmentActivity implements View.OnClickListen
         Intent intent;
         switch (v.getId()) {
             case R.id.btn1:
+                /**
+                 * 五、Android WebView开发(五)：自定义WebView工具栏
+                 */
                 intent = new Intent(HomeActivity.this, SysSelectionBoxWebViewActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.btn2:
                 intent = new Intent(HomeActivity.this, SelectionBoxWebViewActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.btn3:
+                /**
+                 * 二、Android WebView开发(二)：WebView与Native交互
+                 */
                 intent = new Intent(HomeActivity.this, JsToNativeBridgeActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.btnJS:
+                /**
+                 * 二、Android WebView开发(二)：WebView与Native交互
+                 */
                 intent = new Intent(HomeActivity.this, NativeToJsBridgeActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.btn4:
                 intent = new Intent(HomeActivity.this, WebViewScrollActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.btn5:
+                /**
+                 * 一、Android WebView开发(一)：基础应用
+                 */
                 intent = new Intent(HomeActivity.this, NormalWebViewActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.btn_single_process:
+                /**
+                 * 四、Android WebView开发(四)：WebView独立进程解决方案
+                 */
                 intent = new Intent(HomeActivity.this, SingleProcessActivity.class);
                 startActivity(intent);
                 break;
