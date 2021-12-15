@@ -39,14 +39,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="正文顶部动画" />
+        android:text="WebView滑动监听" />
 
     <Button
         android:id="@+id/btn5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Doc等文件WebView预览" />
+        android:text="WebView基础应用" />
 
     <Button
         android:id="@+id/btn_single_process"
